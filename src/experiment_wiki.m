@@ -40,11 +40,15 @@ sd_fc= sd_pc./(N-n_vals')
 
 
 'Wiki Finished'
-random_chance= 1/(N-n_vals');
-plot(n_vals,fc,'r-')
+figure
+random_chance= 1./(N-n_vals');
+%plot(n_vals,fc,'r-')
 hold on
 
 plot(n_vals,random_chance,'b-.')
-
-
+title('Wiki article matching-First 400 Verts')
+errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-')
+xlabel('Number of Hard seeds')
+ylabel('Fraction of Correct Matches')
+xlim([-5 N+5])
 

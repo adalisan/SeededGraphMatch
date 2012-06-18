@@ -3,11 +3,44 @@ load('elegansGraph.mat')
 GE=Achem;
 GF=Agap;
 
-GE= GE-triu(GE); GE= (GE>0); GE=GE+GE';
-GF= GF-triu(GF); GF= (GF>0); GF=GF+GF';
-
 N_dims=size(GE)
 N_init= N_dims(1)
+
+naive_symmetrization = 0
+
+if (naive_symmetrization)
+%GE= GE-triu(GE);
+GE= (GE>0);
+
+%GE=GE+GE';
+%GF= GF-triu(GF);
+GF= (GF>0); 
+%GF=GF+GF';
+else
+
+%     sym_GE= zeros(N_init);
+%     sym_GF= zeros(N_init);
+%     sym_GE= sym_GE+triu(GE); 
+%     sym_GF= sym_GF+triu(GF);
+%     
+%     sym_GE= sym_GE+sym_GE'; 
+%     sym_GF= sym_GF+sym_GF';
+%     
+%     sym_GE= sym_GE+tril(GE);
+%     sym_GF= sym_GF+tril(GF); 
+  GE = GE+GE';
+  GF=GF+GF';
+  GE= (GE>0);
+
+GF= (GF>0); 
+  
+  
+end
+
+GE= (GE+zeros(N_init));
+GF= (GF+zeros(N_init));
+
+
 
 N = N_init
 GE=GE(1:N,1:N);
@@ -38,11 +71,19 @@ sd_fc= sd_pc./(N-n_vals')
 
 
 'Connectome Finished'
-random_chance= 1/(N-n_vals');
+random_chance= 1./(N-n_vals');
 plot(n_vals,fc,'r-')
 hold on
 
 plot(n_vals,random_chance,'b-.')
+
+
+title('C. Elegans Connectome- Achem vs Agap (Simple Graph) ')
+errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-')
+xlabel('Number of Hard seeds')
+ylabel('Fraction of Correct Matches')
+xlim([-5 N+5])
+
 
 
 

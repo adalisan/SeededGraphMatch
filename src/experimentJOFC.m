@@ -39,7 +39,7 @@ for i=1:numiter
         elseif (j<=7)
             embed.dim = j-2 ;
         else
-            embed.dim = 6 ;
+            embed.dim = sqrt(j+n) ;
         end
         
         putRdata('At',At)
@@ -58,7 +58,9 @@ for i=1:numiter
         evalR('sink()')
         %evalR('error.handle <- function()')
         evalR(['error.handle <- function(ex) {print(ex)}'])
-        evalR('jofc.result <- try(jofc(G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,graph.is.directed=FALSE, oos=TRUE,use.weighted.graph=TRUE))')
+        
+
+        evalR('jofc.result <- try(JOFC.graph(G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,graph.is.directed=FALSE))')
         % evalR('eval(parse(jofc.call))')
         %evalR('jofc.result<- tryCatch ({eval(parse(jofc.call))},error=error.handle)')
         %  traceback   })')
@@ -94,7 +96,7 @@ for i=1:numiter
         
         truematch(3) = getRdata('NumofTruePairing.3');
         
-        evalR('jofc.diff.dist.result <- try(jofc.diffusion.dist         (G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,graph.is.directed=FALSE, oos=TRUE,sep.graphs=TRUE,T.param=2))')
+        evalR('jofc.diff.dist.result <- try(jofc.diffusion.dist (G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,T.param=2))')
         
         evalR('sink("debug.matlab.txt")')
         evalR('traceback()')
