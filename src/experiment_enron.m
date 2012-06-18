@@ -1,13 +1,18 @@
 
 
-evalR('setwd("C:/Users/Sancar/Documents/projects/DataFusion/data")')
+evalR('setwd("./data")')
 evalR('load("AAA-187As-184x184.Rbin")')
 evalR('sink("test_R_int.txt")')
 evalR('print(str(AAA[[1]]))')
 evalR('sink()')
 
-evalR('GE=AAA[[131]]')
-evalR('GF=AAA[[132]]')
+time_stamp_G1 = 131;
+time_stamp_G2 = 132;
+
+putRdata('t1', time_stamp_G1)
+putRdata('t2', time_stamp_G2)
+evalR('GE=AAA[[t1]]')
+evalR('GF=AAA[[t2]]')
 
 
 GE=getRdata('GE');
@@ -45,5 +50,17 @@ fc= pc./(N-n_vals')
 sd_fc= sd_pc./(N-n_vals')
 
 'Enron Finished'
-plot(n_vals,fc)
+random_chance= 1./(N-n_vals');
+plot(n_vals,fc,'r-')
+hold on
+
+plot(n_vals,random_chance,'b-.')
+
+corr_match_old = corr_match;
+pc_old = pc;
+sd_pc_old = sd_pc;
+fc_old = fc;
+sd_fc_old = sd_fc;
+
+
 
