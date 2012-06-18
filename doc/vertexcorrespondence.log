@@ -1,0 +1,313 @@
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2011.7.21)  12 JUN 2012 00:23
+entering extended mode
+**C:/Users/Sancar/Documents/projects/VertexCorrespondence/doc/vertexcorresponde
+nce.tex
+
+(C:/Users/Sancar/Documents/projects/VertexCorrespondence/doc/vertexcorresponden
+ce.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2009-06-19, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, lat
+vian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerm
+an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese, 
+romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
+sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
+senglishmax, welsh, loaded.
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size12.clo"
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsmath.sty"
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amstext.sty"
+Package: amstext 2000/06/29 v2.01
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsopn.sty"
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count87
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count88
+\leftroot@=\count89
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count90
+\DOTSCASE@=\count91
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count92
+\c@MaxMatrixCols=\count93
+\dotsspace@=\muskip10
+\c@parentequation=\count94
+\dspbrk@lvl=\count95
+\tag@help=\toks15
+\row@=\count96
+\column@=\count97
+\maxfields@=\count98
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\classes\amsthm.sty"
+Package: amsthm 2004/08/06 v2.20
+\thm@style=\toks19
+\thm@bodyfont=\toks20
+\thm@headfont=\toks21
+\thm@notefont=\toks22
+\thm@headpunct=\toks23
+\thm@preskip=\skip46
+\thm@postskip=\skip47
+\thm@headsep=\skip48
+\dth@everypar=\toks24
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
+Package: amssymb 2009/06/22 v3.00
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count99
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks25
+)
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
+)
+\c@theorem=\count100
+
+(C:\Users\Sancar\Documents\projects\VertexCorrespondence\doc\vertexcorresponden
+ce.aux
+
+LaTeX Warning: Label `figell2' multiply defined.
+
+
+LaTeX Warning: Label `figell2' multiply defined.
+
+)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+ ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count101
+\scratchdimen=\dimen114
+\scratchbox=\box28
+\nofMPsegments=\count102
+\nofMParguments=\count103
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count104
+\MPscratchDim=\dimen115
+\MPnumerator=\count105
+\makeMPintoPDFobject=\count106
+\everyMPtoPDFconversion=\toks27
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+) [1
+
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Overfull \hbox (67.3011pt too wide) in alignment at lines 114--128
+ [][][] []
+ []
+
+
+Overfull \hbox (47.63612pt too wide) detected at line 162
+[] [] [] \OT1/cmr/m/n/12 = []
+ []
+
+
+Overfull \hbox (36.1281pt too wide) detected at line 172
+[] [] \OMS/cmsy/m/n/12  []                   [][]\OML/cmm/m/it/12 P \OMS/cmsy/
+m/n/12 2 \U/msb/m/n/12 R[]  []  \OML/cmm/m/it/12 []; [] \OMS/cmsy/m/n/12 2 \U
+/msb/m/n/12 R[]\OML/cmm/m/it/12 :                                              
+       
+ []
+
+[2] [3] [4] [5] [6]
+Overfull \hbox (165.19604pt too wide) in paragraph at lines 432--432
+[]  
+ []
+
+
+Overfull \hbox (6.94873pt too wide) in paragraph at lines 444--445
+[]\OT1/cmr/m/n/12 So $\OML/cmm/m/it/12 c \OT1/cmr/m/n/12 = [] []$ 
+ []
+
+[7] [8] <n30rep65ell1.pdf, id=40, 614.295pt x 794.97pt>
+File: n30rep65ell1.pdf Graphic file (type pdf)
+ <use n30rep65ell1.pdf>
+Package pdftex.def Info: n30rep65ell1.pdf used on input line 521.
+(pdftex.def)             Requested size: 598.39354pt x 774.44368pt.
+
+Overfull \hbox (99.73099pt too wide) in paragraph at lines 521--522
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 131.22653pt on input line 522.
+
+<n30rep65ell2.pdf, id=41, 614.295pt x 794.97pt>
+File: n30rep65ell2.pdf Graphic file (type pdf)
+ <use n30rep65ell2.pdf>
+Package pdftex.def Info: n30rep65ell2.pdf used on input line 526.
+(pdftex.def)             Requested size: 598.39354pt x 774.44368pt.
+
+Overfull \hbox (99.73099pt too wide) in paragraph at lines 526--527
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 131.22653pt on input line 527.
+
+<./../graphs/rQAP_vs_rQAP2-alotmore.pdf, id=42, 614.295pt x 794.97pt>
+File: ./../graphs/rQAP_vs_rQAP2-alotmore.pdf Graphic file (type pdf)
+
+<use ./../graphs/rQAP_vs_rQAP2-alotmore.pdf>
+Package pdftex.def Info: ./../graphs/rQAP_vs_rQAP2-alotmore.pdf used on input l
+ine 538.
+(pdftex.def)             Requested size: 598.39354pt x 774.44368pt.
+
+Overfull \hbox (99.73099pt too wide) in paragraph at lines 538--539
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 150.07657pt on input line 539.
+
+[9] [10 <C:/Users/Sancar/Documents/projects/VertexCorrespondence/doc/n30rep65el
+l1.pdf>] [11 <C:/Users/Sancar/Documents/projects/VertexCorrespondence/doc/n30re
+p65ell2.pdf>] [12 <C:/Users/Sancar/Documents/projects/VertexCorrespondence/grap
+hs/rQAP_vs_rQAP2-alotmore.pdf>]
+File: ./../graphs/rQAP_vs_rQAP2-alotmore.pdf Graphic file (type pdf)
+ <use ./../graphs/rQAP_vs_rQAP2-alotmore.pdf>
+Package pdftex.def Info: ./../graphs/rQAP_vs_rQAP2-alotmore.pdf used on input l
+ine 554.
+(pdftex.def)             Requested size: 598.39354pt x 774.44368pt.
+
+Overfull \hbox (99.73099pt too wide) in paragraph at lines 554--555
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 150.07657pt on input line 555.
+
+[13] [14] [15]
+(C:\Users\Sancar\Documents\projects\VertexCorrespondence\doc\vertexcorresponden
+ce.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 2148 strings out of 494049
+ 26591 string characters out of 3148438
+ 92723 words of memory out of 3000000
+ 5430 multiletter control sequences out of 15000+200000
+ 13127 words of font info for 49 fonts, out of 3000000 for 9000
+ 715 hyphenation exceptions out of 8191
+ 27i,13n,24p,942b,232s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb
+><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Pro
+gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on vertexcorrespondence.pdf (15 pages, 217948 bytes).
+PDF statistics:
+ 115 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -1,0 +1,126 @@
+%% LyX 2.0.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,lmargin=1.5cm}
+\usepackage{amsmath}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\DeclareMathOperator{\Tr}{Tr}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+The objective function for rQAP2 is
+
+\begin{align*}
+f(P) & = & \left\Vert AP^{*}-P^{*}B\right\Vert _{F}\\
+ & = & \left\Vert A_{21}-PB_{21}\right\Vert _{F} & + & \left\Vert A_{12}P-B_{12}\right\Vert _{F} & +\left\Vert A_{22}P-PB_{22}\right\Vert _{F} & \textrm{Terms (1), (2) and (3)}
+\end{align*}
+
+
+where $P^{*}$ is the omnibus permutation matrix $\left[\begin{array}{cc}
+I & \mathbf{0}\\
+\mathbf{0} & P
+\end{array}\right]$ .
+
+Consider term (1)
+
+\begin{align*}
+\left\Vert A_{21}-PB_{21}\right\Vert _{F} & = & \Tr\left[\left(A_{21}-PB_{21}\right)^{T}\left(A_{21}-PB_{21}\right)\right]\\
+ & = & \Tr\left[A_{21}^{T}A_{21}-B_{21}^{T}P^{T}A_{21}-A_{21}^{T}PB_{21}+B_{21}^{T}P^{T}PB_{21}\right]\\
+ & = & \Tr\left[A_{21}^{T}A_{21}-B_{21}^{T}P^{T}A_{21}-A_{21}^{T}PB_{21}+P^{T}PB_{21}B_{21}^{T}\right]\\
+ & = & \Tr\left[A_{21}^{T}A_{21}-2*B_{21}^{T}P^{T}A_{21}+P^{T}PB_{21}B_{21}^{T}\right]
+\end{align*}
+
+
+where the simplification in the last line is due to the fact that
+the matrices with minus signs in front are transposes of each other.
+The three terms inside the brackets in the last line are referred
+as (1.1),(1.2) and (1.3), respectively.
+
+Similarly for term (2)
+
+\begin{align*}
+\left\Vert A_{12}P-B_{12}\right\Vert _{F} & = & \Tr\left[\left(A_{12}P-B_{12}\right)^{T}\left(A_{12}P-B_{12}\right)\right]\\
+ & = & \Tr\left[P^{T}A_{12}^{T}A_{12}P-B_{12}^{T}A_{12}P-P^{T}A_{12}^{T}B_{12}+B_{12}^{T}B_{12}\right]\\
+ & = & \Tr\left[PP^{T}A_{12}^{T}A_{12}-B_{12}^{T}A_{12}P-P^{T}A_{12}^{T}B_{12}+B_{12}^{T}B_{12}\right]\\
+ &  & \Tr\left[PP^{T}A_{12}^{T}A_{12}-2P^{T}A_{12}^{T}B_{12}+B_{12}^{T}B_{12}\right]
+\end{align*}
+
+
+The three terms inside the brackets are referred as (2.1),(2.2) and
+(2.3), respectively.
+
+and finally term (3)
+
+\begin{align*}
+\left\Vert A_{22}P-PB_{22}\right\Vert _{F} & = & \Tr\left[\left(A_{22}P-PB_{22}\right)^{T}\left(A_{22}P-PB_{22}\right)\right]\\
+ & = & \Tr\left[P^{T}A_{22}^{T}A_{22}P-B_{22}^{T}P^{T}A_{22}P-P^{T}A_{22}^{T}PB_{22}+B_{22}^{T}P^{T}PB_{22}\right]\\
+ & = & \Tr\left[PP^{T}A_{22}^{T}A_{22}-B_{22}^{T}P^{T}A_{22}P-P^{T}A_{22}^{T}PB_{22}+PB_{22}B_{22}^{T}P^{T}\right]
+\end{align*}
+
+
+The three terms inside the brackets are referred as (3.1),(3.2) ,(3.3)
+and (3.4), respectively.
+
+Note that $\Tr\left[PP^{T}A_{22}^{T}A_{22}-B_{22}^{T}P^{T}A_{22}P-P^{T}A_{22}^{T}PB_{22}+PB_{22}B_{22}^{T}P^{T}\right]$
+can be further simplified to 
+
+\[
+\Tr\left[PP^{T}A_{22}^{T}A_{22}-2*P^{T}A_{22}^{T}PB_{22}+PB_{22}B_{22}^{T}P^{T}\right]
+\]
+.
+
+The gradient for rQAP2 with hard seeds (minimization problem) is
+
+$\nabla_{P}f(P)=-2A_{21}B_{21}^{T}+2PB_{21}B_{21}^{T}-2A_{12}^{T}B_{12}+2A_{12}^{T}A_{12}P+2(A_{22}^{T}A_{22}P+PB_{22}B_{22}^{T}-A_{22}^{T}PB_{22}-A_{22}PB_{22}^{T}$)
+
+\begin{flushleft}
+The line search function in terms of $\alpha$ is
+\par\end{flushleft}
+
+\begin{flushleft}
+\begin{align*}
+g(\alpha) & = & \alpha^{2} & \Tr\biggl[\hat{P}^{T}\hat{P}\left(B_{21}B_{21}^{T}+B_{22}B_{22}^{T}\right)+\left(A_{12}^{T}A_{12}+A_{22}^{T}A_{22}\right)\hat{P}\hat{P}^{T} & (1.3+3.4)+(2.1+3.1)\\
+ &  &  & -\hat{P}^{T}A_{22}^{T}\hat{P}B_{22}-\hat{P}^{T}A_{22}\hat{P}B_{22}^{T}\biggr] & -(3.2)-(3.3)\\
+ & + & \left(1-\alpha\right)^{2} & \Tr\biggl[\hat{Q}^{T}\hat{Q}\left(B_{21}B_{21}^{T}+B_{22}B_{22}^{T}\right)+\left(A_{12}^{T}A_{12}+A_{22}^{T}A_{22}\right)\hat{Q}\hat{Q}^{T} & (1.3+3.4)+(2.1+3.1)\\
+ &  &  & -\hat{Q}^{T}A_{22}^{T}\hat{Q}B_{22}-\hat{Q}^{T}A_{22}\hat{Q}B_{22}^{T}\biggr] & -(3.2)-(3.3)\\
+ & + & \alpha\left(1-\alpha\right) & \Tr[\left(\hat{Q}^{T}\hat{P}+\hat{P}^{T}\hat{Q}\right)\left(B_{21}B_{21}^{T}+B_{22}B_{22}^{T}\right)+\left(A_{12}^{T}A_{12}+A_{22}^{T}A_{22}\right)\left(\hat{Q}\hat{P}^{T}+\hat{P}\hat{Q}^{T}\right) & (1.3)+(3.4)+(2.1)+(3.1)\\
+ &  &  & -\hat{P}^{T}\left[A_{22}^{T}\hat{Q}B_{22}+A_{22}\hat{Q}B_{22}^{T}\right]-\hat{Q}^{T}\left[A_{22}^{T}\hat{P}B_{22}+A_{22}\hat{P}B_{22}^{T}\right]] & -[(3.3)+(3.2)]-[(3.3)+(3.2)]\\
+ & + & \alpha & \Tr\left[-2\hat{P}B_{12}^{T}A_{12}-2\hat{P}^{T}A_{21}B_{21}^{T}\right] & [-(2.2)-(1.2)]\\
+ & + & \left(1-\alpha\right) & \Tr\left[-2\hat{Q}B_{12}^{T}A_{12}-2\hat{Q}^{T}A_{21}B_{21}^{T}\right] & [-(2.2)-(1.2)]
+\end{align*}
+
+\par\end{flushleft}
+
+where the decimal numbers in the right end of the line refer to the
+terms for corresponding to $\left\Vert A_{21}-PB_{21}\right\Vert _{F}$
+,$\left\Vert A_{12}P-B_{12}\right\Vert _{F}$ and $\left\Vert A_{22}P-PB_{22}\right\Vert _{F}$
+in the objective function. Writing $g\left(\alpha\right)$ in terms
+of $\alpha$ and (1-$\alpha$),
+
+$g\left(\alpha\right)=c\alpha^{2}+e(1-\alpha)^{2}+d\alpha(1-\alpha)+u\alpha+v(1-\alpha)$
+
+So $c=\Tr\left[\hat{P}^{T}\hat{P}\left(B_{21}B_{21}^{T}+B_{22}B_{22}^{T}\right)+\left(A_{12}^{T}A_{12}+A_{22}^{T}A_{22}\right)\hat{P}\hat{P}^{T}-\hat{P}^{T}A_{22}^{T}\hat{P}B_{22}-\hat{P}^{T}A_{22}\hat{P}B_{22}^{T}\right]$
+
+\noindent 
+\begin{eqnarray*}
+d & = & \Tr\biggl[\left(\hat{Q}^{T}\hat{P}+\hat{P}^{T}\hat{Q}\right)\left(B_{21}B_{21}^{T}+B_{22}B_{22}^{T}\right)+\left(A_{12}^{T}A_{12}+A_{22}^{T}A_{22}\right)\left(\hat{Q}\hat{P}^{T}+\hat{P}\hat{Q}^{T}\right)\\
+ &  & -\hat{P}^{T}\left[A_{22}^{T}\hat{Q}B_{22}+A_{22}\hat{Q}B_{22}^{T}\right]-\hat{Q}^{T}\left[A_{22}^{T}\hat{P}B_{22}+A_{22}\hat{P}B_{22}^{T}\right]\biggr]
+\end{eqnarray*}
+
+
+$e=\Tr\left[\hat{Q}^{T}\hat{Q}\left(B_{21}B_{21}^{T}+B_{22}B_{22}^{T}\right)+\left(A_{12}^{T}A_{12}+A_{22}^{T}A_{22}\right)\hat{Q}\hat{Q}^{T}-\hat{Q}^{T}A_{22}^{T}\hat{Q}B_{22}-\hat{Q}^{T}A_{22}\hat{Q}B_{22}^{T}\right]$
+
+$u=\Tr\left[-2\hat{P}B_{12}^{T}A_{12}-2\hat{P}^{T}A_{21}B_{21}^{T}\right]$
+
+$v=\Tr\left[-2\hat{Q}B_{12}^{T}A_{12}-2\hat{Q}^{T}A_{21}B_{21}^{T}\right]$
+
+Putting this polynomial of $\alpha$ in standard form, we get $a=c+e-d$,
+$b=d-2e+u-v$ and $c=e+v$ .
+\end{document}
