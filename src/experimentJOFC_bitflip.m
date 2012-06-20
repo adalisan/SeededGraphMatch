@@ -1,12 +1,13 @@
-function [pc,pcjofc,pcjofc_diff,iterofFW_rQAP] = experimentJOFC(n,maxm,numiter)
+
 
 pc=zeros(maxm+1,3);
 pcjofc = zeros(maxm+1,3);
 pcjofc_diff = zeros(maxm+1,3);
+pcjofc_custom = zeros(maxm+1,3);
 
 truematch = zeros(3,1);
 truematch_diff = zeros(3,1);
-
+truematch_custom_dissimilar  = zeros(3,1);
 iterofFW_rQAP =zeros(numiter,maxm+1);
 
 
@@ -18,7 +19,7 @@ w_vals_vec(1) = 0.8;
 %w_vals_vec(1) = 0.5 ;
 %w_vals_vec(2) = 0.8;
 %w_vals_vec(3) = 0.95;
-q=0.25
+q=0.1
 
 for i=1:numiter
     i
@@ -36,12 +37,15 @@ for i=1:numiter
         
         
         embed.dim =2;
+       
+        
         if (j<=2)
             continue
-        elseif (j<=7)
-            embed.dim = j-2 ;
+        elseif (j<10)
+            embed.dim=2;
         else
-            embed.dim = ceil(sqrt(maxm+n)) ;
+            embed.dim = min(j,5) ;
+      
         end
         
         putRdata('At',At)
@@ -63,8 +67,8 @@ for i=1:numiter
         evalR('sink()')
         %evalR('error.handle <- function()')
         evalR(['error.handle <- function(ex) {print(ex)}'])
-        evalR('jofc.result <- try(jofc(G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,graph.is.directed=FALSE, oos=TRUE,use.weighted.graph=TRUE))')
-        % evalR('eval(parse(jofc.call))')
+         evalR('jofc.result <- try(JOFC.graph(G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,graph.is.directed=FALSE))')
+       % evalR('eval(parse(jofc.call))')
         %evalR('jofc.result<- tryCatch ({eval(parse(jofc.call))},error=error.handle)')
         %  traceback   })')
         evalR('sink("debug.matlab.txt")')
@@ -99,8 +103,9 @@ for i=1:numiter
         
 %        truematch(3) = getRdata('NumofTruePairing.3');
         
-        evalR('jofc.diff.dist.result <- try(jofc.diffusion.dist         (G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,graph.is.directed=FALSE, oos=TRUE,sep.graphs=TRUE,T.param=2))')
-        
+           
+       evalR('jofc.diff.dist.result <- try(JOFC.graph.diff(G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,T.param=2))')
+      
         evalR('sink("debug.matlab.txt")')
         evalR('traceback()')
         evalR('print(jofc.diff.dist.result )')
@@ -137,6 +142,65 @@ for i=1:numiter
         pcjofc_diff(j+1,1) =  pcjofc_diff(j+1,1) + truematch_diff(1)/n;
 %        pcjofc_diff(j+1,2) =  pcjofc_diff(j+1,2) + truematch_diff(2)/n;
  %       pcjofc_diff(j+1,3) =  pcjofc_diff(j+1,3) + truematch_diff(3)/n;
+ 
+ 
+        evalR('jofc.result.custom <- try(JOFC.graph.custom.dist(G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,graph.is.directed=FALSE))')
+        % evalR('eval(parse(jofc.call))')
+        %evalR('jofc.result<- tryCatch ({eval(parse(jofc.call))},error=error.handle)')
+        %  traceback   })')
+        evalR('sink("debug.matlab.txt")')
+        evalR('traceback()')
+        evalR('print(jofc.result.custom)')
+        evalR('sink()')
+        evalR('jofc.res.1.custom<-jofc.result.custom[[1]]')
+        evalR('jofc.res.2.custom<-jofc.result.custom[[2]]')
+        evalR('jofc.res.3.custom<-jofc.result.custom[[3]]')
+        jofc_dist_mat_1_custom_dissimilar=getRdata('jofc.res.1.custom') 
+        jofc_dist_mat_2_custom_dissimilar=getRdata('jofc.res.2.custom') 
+        jofc_dist_mat_3_custom_dissimilar=getRdata('jofc.res.3.custom') 
+        matching_1_custom_dissimilar = YiCaoHungarian(jofc_dist_mat_1_custom_dissimilar)
+        matching_2_custom_dissimilar = YiCaoHungarian(jofc_dist_mat_2_custom_dissimilar)
+        matching_3_custom_dissimilar = YiCaoHungarian(jofc_dist_mat_3_custom_dissimilar)
+%         evalR('M.result.1<-try(solveMarriage(jofc.res.1.custom))')
+%         evalR('M.result.2<-try(solveMarriage(jofc.res.2.custom))')
+%         evalR('M.result.3<-try(solveMarriage(jofc.res.3.custom))')
+%         
+        
+%         evalR('skip.iter<-FALSE')
+%         evalR('	skip.iter <-inherits(M.result.1,"try-error")')
+%         if (getRdata('skip.iter'))
+%             'Skipping iteration'
+%             continue
+%             
+%         end
+%         
+%         evalR('NumofTruePairing.1<-present(M.result.1)')
+%         evalR('NumofTruePairing.2<-present(M.result.2)')
+%         evalR('NumofTruePairing.3<-present(M.result.3)')
+%         
+%         
+%         truematch(1) = getRdata('NumofTruePairing.1');
+%         
+%         truematch(2) = getRdata('NumofTruePairing.2');
+%         
+%         truematch(3) = getRdata('NumofTruePairing.3');
+        
+        truematch_custom_dissimilar(1) = sum(matching_1_custom_dissimilar==1:n);
+        
+        truematch_custom_dissimilar(2) = sum(matching_2_custom_dissimilar==1:n);
+        truematch_custom_dissimilar(3) = sum(matching_3_custom_dissimilar==1:n);
+ 
+ 
+        pcjofc_custom(j+1,1) =  pcjofc_custom(j+1,1) + truematch_custom_dissimilar(1)/n;
+         pcjofc_custom(j+1,2) =  pcjofc_custom(j+1,1) + truematch_custom_dissimilar(2)/n;
+ 
+          pcjofc_custom(j+1,3) =  pcjofc_custom(j+1,1) + truematch_custom_dissimilar(3)/n;
+ 
+ 
+ 
+ 
+ 
+ 
         
     end
 end
@@ -145,7 +209,7 @@ pcjofc =pcjofc /numiter;
 pcjofc_diff =pcjofc_diff /numiter;
 
 
-close
+
 
 
 

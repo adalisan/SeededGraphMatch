@@ -1,18 +1,13 @@
 
 
-evalR('setwd("./data")')
+evalR('setwd("C:/Users/Sancar/Documents/projects/DataFusion/data")')
 evalR('load("AAA-187As-184x184.Rbin")')
 evalR('sink("test_R_int.txt")')
 evalR('print(str(AAA[[1]]))')
 evalR('sink()')
 
-time_stamp_G1 = 131;
-time_stamp_G2 = 132;
-
-putRdata('t1', time_stamp_G1)
-putRdata('t2', time_stamp_G2)
-evalR('GE=AAA[[t1]]')
-evalR('GF=AAA[[t2]]')
+evalR('GE=AAA[[131]]')
+evalR('GF=AAA[[132]]')
 
 
 GE=getRdata('GE');

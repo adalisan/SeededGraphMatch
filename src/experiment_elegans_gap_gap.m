@@ -1,6 +1,6 @@
 load('elegansGraph.mat')
 
-GF=Achem;
+GF=Agap;
 GF= GF-triu(GF); GF= (GF>0); GF=GF+GF';
 %GE= GE-triu(GE); GE= (GE>0); GE=GE+GE';
 N_dims=size(GF)
@@ -27,20 +27,14 @@ num_iter = 1;
 corr_match=zeros(length(n_vals),num_iter);
 for n_i = 1:length(n_vals)
     
+    shuffle= randperm(N-n_vals(n_i));
+    shuffle= [1:n_vals(n_i) , shuffle+n_vals(n_i)]
     GE= GF(shuffle,shuffle);
     
     
     for i=1:num_iter
     i
-    %kind of WRONG because we keep the same vertices as seed
-    %in all iterations
-    %Randomly  shuffle the test vertices
-   
-    
-    shuffle= randperm(N-n_vals(n_i));
-    shuffle= [1:n_vals(n_i) , shuffle+n_vals(n_i)]
-    
-    ordering=shuffle;
+    ordering=randperm(N);
     matching=ConVogHard_rQAP_order(GE,GF,n_vals(n_i),ordering);
     corr_match(n_i,i) =  sum(matching((n_vals(n_i)+1):N)== ...
         shuffle(ordering((n_vals(n_i)+1):N)))
