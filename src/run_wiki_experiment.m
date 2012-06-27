@@ -1,5 +1,5 @@
 
-function [fc,sd_fc,random_chance,n_vals,num_iter]=run_wiki_experiment(N,n_vals,num_iter)
+function [fc,sd_fc,n_vals,num_iter]=run_wiki_experiment(N,n_vals,num_iter)
 
 %Function run_wiki_experiment
 %[fc,sd_fc,random_chance,n_vals,num_iter]=run_wiki_experiment(N,n_vals,num_iter)
@@ -40,8 +40,13 @@ for i=1:num_iter
         %Do this ugly very ugly hack to keep the same  test vertices
         %And have adjacency matrix for the seed vertices on the upper left of matrices
         seed_plus_test_vertex_indices = ordering([(N+1):totv 1:N]);
+        
         GE=G_EN_Adj(seed_plus_test_vertex_indices,seed_plus_test_vertex_indices);
         GF=G_FR_Adj(seed_plus_test_vertex_indices,seed_plus_test_vertex_indices);
+        %After the preciding two lines, the original indices of the
+        %vertices are irrelevant neither ConVogHard_rQAP nor matching
+        %treats the vertices as numbered from 1 to N+n_vals(i) where the
+        %first n_vals(i) vertices are hard seeds
         matching=ConVogHard_rQAP(GE,GF,n_vals(n_i));
         corr_match(n_i,i) =  sum(matching((n_vals(n_i)+1):totv)==((n_vals(n_i)+1):totv));
     end
@@ -65,4 +70,5 @@ errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-')
 xlabel('Number of Hard seeds')
 ylabel('Fraction of Correct Matches')
 xlim([-5 N+5])
+end
 

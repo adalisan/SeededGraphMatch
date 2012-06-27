@@ -2,7 +2,7 @@ function [pc,pcjofc] = experiment(n,maxm,numiter)
 
 pc=zeros(1,maxm+1);
 pcjofc = zeros(1,maxm+1);
-truematch = 0
+truematch = 0;
 for i=1:numiter
     i
     Bernoulli=rand(maxm+n,maxm+n);
@@ -18,10 +18,9 @@ for i=1:numiter
         embed.dim =2;
         if (j<=2) 
             continue
-        elseif (j<=7)
-            embed.dim = j-2 ;
         else
-            embed.dim = 6 ;
+            embed.dim = j-2 ;
+        
         end
             
         putRdata('At',At)
