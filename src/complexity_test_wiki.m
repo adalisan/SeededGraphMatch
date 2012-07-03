@@ -1,31 +1,30 @@
 
 load('./data/wiki_adj.mat')
 
-print('Loaded wiki adjacency matrix')
+'Loaded wiki adjacency matrix'
 
 
 N_dims=size(G_EN_Adj)
 N_all= N_dims(1)
 
 %N= 400
-GE=G_EN_Adj;
-GF=G_FR_Adj;
-rowsum_E=sum(GE,2);
-find(rowsum_E==0)
-rowsum_F=sum(GF,2);
-find(rowsum_F==0)
 
-%n_vals=[0 1 5 10 20 50 100 200 300 350 400 450];
 
-%num_iter = 50;
+
+n_vals=[0 1  20 200   600 ];
+
+num_iter = 20;
 corr_match=zeros(length(n_vals),num_iter);
 
-N_vals=[50 100 300 400 500 550];
+N_vals=[50 60 70 80 90 100 125 150 175 200 225 250 275 300 350 400 450 500 550];
 ex_time=zeros(length(N_vals),num_iter);
+ex_time_seed =zeros(length(n_vals),length(N_vals));
 for N_it=1:length(N_vals)
-    N=N_vals(N_it)
+    N=N_vals(N_it);
     
 for i=1:num_iter
+    GE=[];
+    GF=[];
     tic;
     i
     ordering=randperm(N_all);
@@ -39,6 +38,8 @@ for i=1:num_iter
         matching=ConVogHard_rQAP(GE,GF,n_vals(n_i));
         corr_match(n_i,i) =  sum(matching((n_vals(n_i)+1):totv)==((n_vals(n_i)+1):totv));
     end
-    ex_time(N_it,i)=toc;
+    ex_time(N_it,i)=toc
+    mean(ex_time,2)
+    
 end
 end
