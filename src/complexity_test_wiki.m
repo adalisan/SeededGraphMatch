@@ -22,24 +22,29 @@ ex_time_seed =zeros(length(n_vals),length(N_vals));
 for N_it=1:length(N_vals)
     N=N_vals(N_it);
     
-for i=1:num_iter
+    for i=1:num_iter
     GE=[];
     GF=[];
-    tic;
-    i
-    ordering=randperm(N_all);
-    for n_i = 1:length(n_vals)
-        totv = (N+n_vals(n_i));
-        %Do this ugly very ugly hack to keep the same  test vertices
-        %And have adjacency matrix for the seed vertices on the upper left of matrices
-        seed_plus_test_vertex_indices = ordering([(N+1):totv 1:N]);
-        GE=G_EN_Adj(seed_plus_test_vertex_indices,seed_plus_test_vertex_indices);
-        GF=G_FR_Adj(seed_plus_test_vertex_indices,seed_plus_test_vertex_indices);
-        matching=ConVogHard_rQAP(GE,GF,n_vals(n_i));
-        corr_match(n_i,i) =  sum(matching((n_vals(n_i)+1):totv)==((n_vals(n_i)+1):totv));
-    end
+        tic;
+        i
+        ordering=randperm(N_all);
+        for n_i = 1:length(n_vals)
+            totv = (N+n_vals(n_i));
+            %Do this ugly very ugly hack to keep the same  test vertices
+            %And have adjacency matrix for the seed vertices on the upper left of matrices
+            seed_plus_test_vertex_indices = ordering([(N+1):totv 1:N]);
+            GE=G_EN_Adj(seed_plus_test_vertex_indices,seed_plus_test_vertex_indices);
+            GF=G_FR_Adj(seed_plus_test_vertex_indices,seed_plus_test_vertex_indices);
+             %After the preciding two lines, the original indices of the
+        %vertices are irrelevant neither ConVogHard_rQAP nor matching
+        %treats the vertices as numbered from 1 to N+n_vals(i) where the
+        %first n_vals(i) vertices are hard seeds
+       
+            matching=ConVogHard_rQAP(GE,GF,n_vals(n_i));
+            corr_match(n_i,i) =  sum(matching((n_vals(n_i)+1):totv)==((n_vals(n_i)+1):totv));
+        end
     ex_time(N_it,i)=toc
     mean(ex_time,2)
     
-end
+    end
 end
