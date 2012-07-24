@@ -36,7 +36,7 @@ alpha_vals =zeros(1,patience+1);
 while (toggle==1)&(iter<patience)
     iter=iter+1;
     Grad=A22*P*B22'+A22'*P*B22+A21*B21'+A12'*B12;
-    ind=YiCaoHungarian(-Grad);
+    ind=lapjv(-Grad,0.01);
   
     T=eye(n);
     T=T(ind,:);
@@ -74,6 +74,6 @@ while (toggle==1)&(iter<patience)
     end
 end
 alpha_vals;
-corr=YiCaoHungarian(-P);
+corr=lapjv(-P,0.01);
 corr=[ ordering(1:m),  ordering(m+corr)];
 
