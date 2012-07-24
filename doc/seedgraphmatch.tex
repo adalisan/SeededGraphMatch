@@ -28,6 +28,8 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
+
+\graphicspath{{./}{./../}{./../graphs/}{./graphs/}}
 \twospace
 \begin{document}
 
@@ -702,17 +704,57 @@ INSERT SIMULATIONS FOR TWO-CLASS RANDOM GRAPHS SIMILAR TO
 SIMULATIONS FOR BERNOULLI RANDOM GRAPHS. 
 
 \section{Wikipedia example \label{wiki}}
-Wikipedia is an online editable encyclopedia with 22 million articles (more than 4 million articles in English) in 285 languages. A collection of $k=1382$ English articles were collected by crawling the (directed) 2-neighborhood of the document ``Algebraic Geometry". This first graph will be made a simple undirected graph by symmetrizing its adjacency matrix. Corresponding articles in French  were also collected to form a second graph.  In Wikipedia, links between articles of the same topic  in different languages are also available.  Thus, 1-1 correspondence information between the vertices of these English wikipedia subgraph and the vertices of the French wikipedia subgraph is available. Following the notation in previous sections, the English wikipedia subgraph is $G_1$ and the  French  wikipedia subgraph is $G_2$. n=600 vertices are randomly chosen as nonseeded vertices, and $m=0,\ldots, 782$ seeds are randomly sampled without replacement as seeds. Fig \ref{Wiki-fig-1} shows the plot of the \emph{match ratio} vs the number of hard seeds.
-This example is the most computationally expensive of our examples. Fig \ref{Wiki-fig-2} shows the running time vs number of vertices to be matched.
+Wikipedia is an online editable encyclopedia with 22 million articles (more than 4 million articles in English) in 285 languages. A collection of $k=1382$ English articles were collected by crawling the (directed) 2-neighborhood of the document ``Algebraic Geometry". This first graph will be made a simple undirected graph by symmetrizing its adjacency matrix.   In Wikipedia, links between articles of the same topic  in different languages are  available.   Thus, 1-1 correspondence information between the vertices of these English wikipedia subgraph and some vertices of the French wikipedia graph is available. Corresponding articles in French  were collected to form a second graph which is not necessarily connected. Following the notation in previous sections, the English wikipedia subgraph is $G_1$ and the  French  wikipedia subgraph induced by the correspondents of the English wikipedia articles is $G_2$. $n=500$ vertices are randomly chosen as nonseeded vertices, and $m=0,\ldots, 882$ seeds are randomly sampled without replacement as seeds. Fig \ref{Wiki-fig-1} shows the plot of the \emph{match ratio} vs the number of hard seeds.
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{wiki}
+\caption{Matching English and French subgraphs \label{Wiki-fig-1}  }
+\end{figure}
+
+This example is the most computationally expensive of our examples. Figure \ref{Wiki-fig-2} shows the running time vs number of vertices to be matched.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{wiki}
+\caption{Matching English and French subgraphs \label{Wiki-fig-1}  }
+\end{figure}
 
 \section{Caenorhabditis elegans brain example \label{celegans}}
 C. elegans is a worm that is a model organism that has been extensively studied. Its  particular usefulness comes from its nervous system, consisting of 302 neurons whose connectome have been  mapped \cite{}. There are two types  of  connections between neurons: chemical( chemical synapses) and electrical(junction potentials ). 
 
 INSERT REASON for 279 vertex graph instead of 302.
-The objective of the experiment is to match the chemical graph $G_1$ to  the electrical one $G_2$ .  The adjacency matrices for both graphs are sparse and both are weighted graphs, so for sake of uniformity, the adjacency matrices are binarized and symmetrized.
+
+The objective of the experiment is to match the chemical graph $G_1$ to  the electrical one $G_2$ .  The adjacency matrices for both graphs are sparse.  Both $G_1$ and $G_2$ are weighted graphs, i.e each edge has a nonzero real number attribute, so for sake of uniformity with the other examples, the adjacency matrices are binarized and symmetrized.  For each number of hard seeds, $m \in\{0,1,5,10,20,50,75,100,150,200\}$,  there are different number of vertices to be matched $n=k-m$. Since the expected number of matches is always 1, the match ratio for random chance $\frac{1}{n}$ is different for each different number of hard seeds. Note the increasing random chance curve in Fig. \ref{worm-fig}.
+\begin{figure}
+\centering
+\includegraphics[scale=.8]{worm}
+\caption{Matching of Chemical and Electrical connectivity graphs of C. elegans nervous system \label{worm-fig}  }
+\end{figure}
+
+Although the match ratio is generally low which should be expected due to the difficulty of the problem, increasing number of hard seeds results in a consistent increase in match ratio.
 
 \section{Enron example \label{enron}}
-Enron email corpus consist of mails between $k=$ executives in Enron. Publicly available data is used to compute a time-series of graphs between $k$ vertices. This is an example of the Two-Class experiment. The inference task is to find anomalies(schemers scheming to commit fraud) in this communication graph.    
+Enron email corpus consists of mails between $k=184$ employees in Enron. Publicly available emails are used to compute a time-series of graphs $\{G_t, t=1,\ldots,T\}$ between $k$ vertices. The inference task is to find anomalies(schemers scheming to commit fraud) in this communication graph.    
+Previous work \cite{} indicates suspicious behaviour takes place at time stamps $t=(130,131,132)$. .  Graphs with consecutive  timesteps at $t=(130,131,132)$ are matched one pair at a time using modified-FAQ. The match ratio for each pair is plotted in \ref{enron-fig}.
+
+\begin{figure}
+\includegraphics[scale=0.8]{enron}
+\caption{Matching of Enron communication graph at timestamps: 130,131,132 \label{enron-fig}  }
+\end{figure}
+
+The results are consistent with previous work \cite{}, the average match ratio is much higher between the graphs at $t=130$ and $t=131$ compared to matching between $t=131$ and $t=132$  and between $t=130$ and $t=132$.  The anomalous event in the graph time-series takes place at  $t=132$ according to \cite{}, which makes the graph matching more difficult compared to matching graphs at other times. 
+
+Note that the Two-Class experiment is an appropriate model for this problem.  The list of anomalous  vertices (scheming fraudsters) , as detected by \cite{} , are 
+$ \{v\in V : \gamma(v)=1\} =  \{
+    2 ,  3 ,  4,   5,   7 , 10,  11,  17 , 18 , 19  ,22 , 28 , 31 , 33,  40,  41 , 44  ,46,  47 ,
+  48,  50 , 52,  54 , 55,  57  ,59,  60  ,63  ,64 , 65,\linebreak 
+ ,71 , 76  ,77 , 79,  80 , 83 , 84,  85, 
+  86 , 87  ,89 , 90  ,94 , 97 , 98 ,102 ,103 ,107, 108, 113, 115 ,117, 119 ,120, 126 , \linebreak
+127, 128 ,
+130 ,133 ,134, 137, 138 ,140, 141, 144 ,146 ,147, 148 ,149 ,150, 155 ,157, 158, 160, 164, 165, \linebreak
+ 167 ,174, 176, 177, 180 ,183 \}$
+
+
 
 
 
