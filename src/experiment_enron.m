@@ -68,7 +68,7 @@ pc=mean(corr_match,2)
 sd_pc = std(corr_match,0,2)
 
 fc= pc./(N-n_vals')
-sd_fc= sd_pc./(N-n_vals')
+sd_fc= sd_pc./(N-n_vals');
 
 'Enron Finished'
 

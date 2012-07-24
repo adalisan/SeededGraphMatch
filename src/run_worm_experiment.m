@@ -93,7 +93,7 @@ plot(n_vals,random_chance,'b-.')
 title('C. Elegans Connectome- Achem vs Agap (Simple Graph) ')
 errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-')
 xlabel('Number of Hard seeds')
-ylabel('Fraction of Correct Matches')
+ylabel('Match Ratio')
 xlim([-5 N+5])
 
 

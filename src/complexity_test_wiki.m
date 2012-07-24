@@ -11,14 +11,16 @@ N_all= N_dims(1)
 
 
 
-n_vals=[0 1  20 200   600 ];
+n_vals=[0 1  20 200   350 600 ];
 
 num_iter = 20;
 corr_match=zeros(length(n_vals),num_iter);
 
-N_vals=[50 60 70 80 90 100 125 150 175 200 225 250 275 300 350 400 450 500 550];
+N_vals=[50 60 70 80 90 100 125 150 175 200 225 250 275 300 350];
 ex_time=zeros(length(N_vals),num_iter);
 ex_time_seed =zeros(length(n_vals),length(N_vals));
+
+ex_time_JV=zeros(length(N_vals),num_iter);
 for N_it=1:length(N_vals)
     N=N_vals(N_it);
     
@@ -40,11 +42,38 @@ for N_it=1:length(N_vals)
         %treats the vertices as numbered from 1 to N+n_vals(i) where the
         %first n_vals(i) vertices are hard seeds
        
-            matching=ConVogHard_rQAP(GE,GF,n_vals(n_i));
+            matching=seedgraphmatchell2(GE,GF,n_vals(n_i));
+           
             corr_match(n_i,i) =  sum(matching((n_vals(n_i)+1):totv)==((n_vals(n_i)+1):totv));
         end
     ex_time(N_it,i)=toc
     mean(ex_time,2)
     
+     tic;
+       
+        for n_i = 1:length(n_vals)
+            n_vals(n_i)
+            totv = (N+n_vals(n_i));
+            %Do this ugly very ugly hack to keep the same  test vertices
+            %And have adjacency matrix for the seed vertices on the upper left of matrices
+            seed_plus_test_vertex_indices = ordering([(N+1):totv 1:N]);
+            GE=G_EN_Adj(seed_plus_test_vertex_indices,seed_plus_test_vertex_indices);
+            GF=G_FR_Adj(seed_plus_test_vertex_indices,seed_plus_test_vertex_indices);
+             %After the preciding two lines, the original indices of the
+        %vertices are irrelevant neither ConVogHard_rQAP nor matching
+        %treats the vertices as numbered from 1 to N+n_vals(i) where the
+        %first n_vals(i) vertices are hard seeds
+       
+            matching=ConVogHard_rQAP_JV(GE,GF,n_vals(n_i));
+           
+            corr_match(n_i,i) =  sum(matching((n_vals(n_i)+1):totv)==((n_vals(n_i)+1):totv));
+        end
+    ex_time_JV(N_it,i)=toc
+    mean(ex_time_JV,2)
+    
+    
     end
 end
+ex_time_with_munkres_as_Hung_algo= mean(ex_time,2);
+
+ex_time_with_JV_as_Hung_algo= mean(ex_time_JV,2);
