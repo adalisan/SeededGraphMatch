@@ -40,7 +40,7 @@ while (toggle==1)&&(iter<patience)
    % Grad=-2*A21*B21' - 2*A12'*B12 ...
    %      -2* A22'*P*B22 - 2*A22*P*B22';
     %Grad is the gradient of the function to be minimized
-    ind=YiCaoHungarian(Grad);
+    ind=lapjv(Grad,0.01);
     T=eye(n);
     T=T(ind,:);
     tempmat1 = (B21*B21'+B22*B22');
@@ -98,7 +98,7 @@ while (toggle==1)&&(iter<patience)
     end
 end
 alpha_vals;
-corr=YiCaoHungarian(-P);
+corr=lapjv(-P,0.01);
 corr=[ 1:m,  m+corr];
 
 

@@ -1,4 +1,4 @@
-function [fc,sd_fc,random_chance,n_vals,num_iter]=run_worm_experiment(n_vals,num_iter)
+function [fc,sd_fc,random_chance,n_vals,num_iter]=run_worm_experiment(n_vals,num_iter,binarize,symmetrize)
 %Function run_worm_experiment
 %[fc,sd_fc,random_chance,n_vals,num_iter]=run_worm_experiment(n_vals,num_iter)
 % input arguments 
@@ -17,9 +17,9 @@ GF=Agap;
 N_dims=size(GE)
 N_init= N_dims(1)
 
-naive_symmetrization = 1;
+naive_symmetrization = 0;
 
-if (naive_symmetrization)
+if (binarize)
 %GE= GE-triu(GE);
 GE= (GE>0);
 
@@ -27,7 +27,8 @@ GE= (GE>0);
 %GF= GF-triu(GF);
 GF= (GF>0); 
 %GF=GF+GF';
-else
+end
+if (binarize && symmetrize)
 
 %     sym_GE= zeros(N_init);
 %     sym_GF= zeros(N_init);
@@ -44,8 +45,7 @@ else
   GE= (GE>0);
 
 GF= (GF>0); 
-  
-  
+     
 end
 
 GE= (GE+zeros(N_init));
@@ -84,17 +84,20 @@ sd_fc= sd_pc./(N-n_vals')
 
 'Connectome Finished'
 random_chance= 1./(N-n_vals');
-plot(n_vals,fc,'r-')
+%plot(n_vals,fc,'r-','LineWidth',2)
+errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-')
 hold on
 
-plot(n_vals,random_chance,'b-.')
+plot(n_vals,random_chance,'k-.','LineWidth',2)
 
 
-title('C. Elegans Connectome- Achem vs Agap (Simple Graph) ')
-errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-')
-xlabel('Number of Hard seeds')
-ylabel('Match Ratio')
-xlim([-5 N+5])
+%title('C. Elegans Connectome- Achem vs Agap (Simple Graph) ')
+title('C. Elegans','FontSize',20)
+
+xlabel('$m$','Interpreter','latex','FontSize',20)
+ylabel('$\delta^{(m)}$','Interpreter','latex','FontSize',20)
+xlim([-5 max(n_vals)+5])
+%legend('Unweighted','Weighted','Chance')
 
 
 

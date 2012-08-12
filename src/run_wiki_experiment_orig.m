@@ -13,6 +13,13 @@ function [fc,sd_fc,random_chance,n_vals,num_iter]=run_wiki_experiment_orig(n_val
 % sd_fc : standard error of fc
 % random_chance : expected number of correct matches under chance
 load('./data/wiki_adj.mat')
+currseed= rng();
+save('random_rng.mat','currseed')
+
+defaultStream = RandStream.getDefaultStream();
+savedState = defaultStream.State;
+save('random_rng_state.mat','savedState')
+
 
 'Loaded wiki adjacency matrix'
 
@@ -34,21 +41,36 @@ find(rowsum_F==0)
 n_vals = n_vals(find(n_vals<N_all))
 %num_iter = 50;
 corr_match=zeros(length(n_vals),num_iter);
+corr_match_no_seed=zeros(length(n_vals),num_iter);
  for i=1:num_iter
     i
     for n_i = 1:length(n_vals)
-   
+    n_i
     ordering=randperm(N_all);
     matching=ConVogHard_rQAP_order(GE,GF,n_vals(n_i),ordering);
-    corr_match(n_i,i) =  sum(matching((n_vals(n_i)+1):N_all)==ordering((n_vals(n_i)+1):N_all));
+    test_v=(n_vals(n_i)+1):N_all;
+    corr_match(n_i,i) =  sum(matching(test_v)==ordering(test_v));
+    test_v_ord=sort(ordering(test_v));
+    matching_no_seed=ConVogHard_rQAP(GE(test_v_ord,test_v_ord),GF(test_v_ord,test_v_ord), ...
+        0);
+    corr_match_no_seed(n_i,i) =  sum(matching_no_seed==(1:(N_all-n_vals(n_i))));
+    save('wiki-all-orig.mat')
     end
 end
 
 
-pc=mean(corr_match,2)
-fc=pc./(N_all-n_vals')
-sd_pc = std(corr_match,0,2)
-sd_fc= sd_pc./(N_all-n_vals')
+pc=mean(corr_match,2);
+fc=pc./(N_all-n_vals');
+sd_pc = std(corr_match,0,2);
+sd_fc= sd_pc./(N_all-n_vals');
+
+pc_noseed=mean(corr_match_no_seed,2);
+fc_noseed=pc_noseed./(N_all-n_vals');
+sd_pc_noseed = std(corr_match_no_seed,0,2);
+sd_fc_noseed= sd_pc_noseed./(N_all-n_vals');
+
+
+
 
 
 'Wiki Finished'
@@ -57,9 +79,18 @@ random_chance= 1./(N_all-n_vals');
 %plot(n_vals,fc,'r-')
 hold on
 
-title('Wiki article matching')
-errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-')
-xlabel('Number of Hard seeds')
-ylabel('Match ratio')
+title('Wikipedia''FontSize',20)
+errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-','LineWidth',2)
+hold on
+errorbar(n_vals,fc_noseed,2*sd_fc_noseed/sqrt(num_iter),'r-','LineWidth',2)
+xlabel('$m$','Interpreter','latex','FontSize',20)
+ylabel('$\delta^{(m)}$','Interpreter','latex','FontSize',20)
+plot(n_vals,1./(N_all-n_vals),'k-.','LineWidth',2)
+
+
+
+
+
+
 xlim([-5 max(n_vals)+5])
 
