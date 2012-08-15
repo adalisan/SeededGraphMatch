@@ -11,8 +11,8 @@ N=60;
 numiter=50;
 n_vals=0:15;
 
-running_time_FAQ=zeros(numiter,length(n_vals),q);
-running_time_SLP=zeros(numiter,length(n_vals),q);
+running_time_FAQ=zeros(numiter,length(n_vals),q_len);
+running_time_SLP=zeros(numiter,length(n_vals),q_len);
 
 corr_match=zeros(length(n_vals),numiter,q_len);
 corr_match_unseed=zeros(length(n_vals),numiter,q_len);
@@ -36,7 +36,7 @@ for q_i= 1:length(q)
             matching=ConVogHard_rQAP_order(A,B,n_vals(n_i),ordering);
             running_time_FAQ(i,n_i,q_i)=toc;
             corr_match(n_i,i,q_i) =  sum(matching((n_vals(n_i)+1):N)==ordering((n_vals(n_i)+1):N));
-            if (q_i==2)
+            if (q_i==2 && i<4)
             tic;
             matching_slp = seedgraphmatchell1(A(ordering,ordering),B(ordering,ordering),n_vals(n_i));
             running_time_SLP(i,n_i,q_i)=toc;
