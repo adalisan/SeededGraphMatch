@@ -79,10 +79,10 @@ random_chance= 1./(N_all-n_vals');
 %plot(n_vals,fc,'r-')
 hold on
 
-title('Wikipedia''FontSize',20)
+title('Wikipedia','FontSize',20)
 errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-','LineWidth',2)
 hold on
-errorbar(n_vals,fc_noseed,2*sd_fc_noseed/sqrt(num_iter),'r-','LineWidth',2)
+errorbar(n_vals,fc_noseed,2*sd_fc_noseed/sqrt(num_iter),'b-','LineWidth',2)
 xlabel('$m$','Interpreter','latex','FontSize',20)
 ylabel('$\delta^{(m)}$','Interpreter','latex','FontSize',20)
 plot(n_vals,1./(N_all-n_vals),'k-.','LineWidth',2)
@@ -93,4 +93,5 @@ plot(n_vals,1./(N_all-n_vals),'k-.','LineWidth',2)
 
 
 xlim([-5 max(n_vals)+5])
+legend('seeded','no seeds','chance')
 
