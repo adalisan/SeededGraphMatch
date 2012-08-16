@@ -9,7 +9,7 @@ truematch_rqap = zeros(q_len,1);
 
 N=60;
 numiter=50;
-n_vals=0:15;
+n_vals=[0:25 30 35 40 45];
 
 running_time_FAQ=zeros(numiter,length(n_vals),q_len);
 running_time_SLP=zeros(numiter,length(n_vals),q_len);
