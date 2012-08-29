@@ -1,21 +1,22 @@
 
-q= [0:0.05:0.5 ];
+%q= [0:0.05:0.5 ];
+q=[0 0.1 0.3 0.45 0.5];
 q_len = length(q);
 
 
 
 q_int=find(q==0.3);
-truematch_rqap = zeros(q_len,1);
 
 
 
-N=20;
+N=600;
 numiter=100;
-slp_iter =100;
+slp_iter =-1;
 %n_vals=[0:25 30 35 40 45];
 %n_vals=[0:1:5 6:2:20 20:5:35 ];
 %n_vals= [0:20 22 24 26];
-n_vals=0:16
+%n_vals=0:16
+n_vals=[ 0 1 5 15 17:2:25 30 35 40 60 80 100 300 450];
 n_vals=n_vals(n_vals<N);
 P_jv_found=[]
 P_l1_found=[]
@@ -76,15 +77,15 @@ for q_i= 1:length(q)
             obj_func_final_vals_JV(n_i,i,q_i)=fval_JV;
             obj_func_final_vals_proj_JV(n_i,i,q_i)=fval_proj_JV;
            
-            [matching_ell2, iter,~,fval_ell2, fval_proj_ell2,P_l2,P_proj_l2]=seedgraphmatchell2_order(A,B,n_vals(n_i),ordering,1);
-           
-            P_l2_cell{n_i,i}=P_l2(:,ordering);
-            P_l2_pr_cell{n_i,i}=P_proj_l2(:,ordering);
-
-            corr_match_ell2(n_i,i,q_i) =  sum(matching_ell2((n_vals(n_i)+1):N)==ordering((n_vals(n_i)+1):N));
-            obj_func_final_vals_ell2(n_i,i,q_i)=fval_ell2;
-            obj_func_final_vals_proj_ell2(n_i,i,q_i)=fval_proj_ell2;
-            if (q_i==q_int && i<=slp_iter )
+%             [matching_ell2, iter,~,fval_ell2, fval_proj_ell2,P_l2,P_proj_l2]=seedgraphmatchell2_order(A,B,n_vals(n_i),ordering,1);
+%            
+%             P_l2_cell{n_i,i}=P_l2(:,ordering);
+%             P_l2_pr_cell{n_i,i}=P_proj_l2(:,ordering);
+% 
+%             corr_match_ell2(n_i,i,q_i) =  sum(matching_ell2((n_vals(n_i)+1):N)==ordering((n_vals(n_i)+1):N));
+%             obj_func_final_vals_ell2(n_i,i,q_i)=fval_ell2;
+%             obj_func_final_vals_proj_ell2(n_i,i,q_i)=fval_proj_ell2;
+             if (q_i==q_int && i<=slp_iter )
             tic;
             [matching_slp,fval_ell1,fval_proj_ell1,P_l1,P_proj_l1] = seedgraphmatchell1(A(ordering,ordering),B(ordering,ordering),n_vals(n_i));
             P_l1_cell{n_i,i} =  P_l1;
@@ -128,7 +129,7 @@ for q_i= 1:length(q)
             matching_unseed=ConVogHard_rQAP(A_sub,B_sub,0);
             corr_match_unseed(n_i,i,q_i) =  sum(matching_unseed==1:(N-n_vals(n_i)));
             
-        save('./sim_result-20.mat')   
+        save('./sim_result-600.mat')   
         if found==1 
             break
         end
@@ -187,11 +188,11 @@ xlabel('$m$','Interpreter','latex','FontSize',20)
 ylabel('$\delta^{(m)}$','Interpreter','latex','FontSize',20)
 plot(n_vals,1./(N-n_vals),main_colors{length(main_colors)},'LineWidth',2)
 
-avg_line=mean(fc_unseed(:,:,q_int),2);
-sd_line = std(fc_unseed(:,:,q_int),1,2);
+%avg_line=mean(fc_unseed(:,:,q_int),2);
+%sd_line = std(fc_unseed(:,:,q_int),1,2);
 
-errorbar (n_vals,avg_line,2*sd_line/sqrt(numiter),'Color',figcolors(q_int*incr,:), ...
-    'LineStyle','-.','LineWidth',1.5)
+%errorbar (n_vals,avg_line,2*sd_line/sqrt(numiter),'Color',figcolors(q_int*incr,:), ...
+%    'LineStyle','-.','LineWidth',1.5)
 qvals= num2str(q');
 
 
@@ -199,6 +200,34 @@ legend(qvals)
 title('Simulation','FontSize',20)    
 xlim([-0.5 max(n_vals)+0.5])
 ylim([-0.1 1.1])
+
+figure
+q_i=q(i);
+avg_line=mean(fc(:,:,q_int),2);
+sd_line = std(fc(:,:,q_int),1,2);
+    %plot (n_vals(1:5),avg_line(1:5,:),colors{i},'LineWidth',2)
+    errorbar (n_vals,avg_line,2*sd_line/sqrt(numiter),'Color','r','LineWidth',2)
+    hold on
+
+    
+avg_line=mean(fc_unseed(:,:,q_int),2);
+sd_line = std(fc_unseed(:,:,q_int),1,2);
+
+    
+errorbar (n_vals,avg_line,2*sd_line/sqrt(numiter),'Color','r', ...
+    'LineStyle','-.','LineWidth',1.5)
+
+title('Simulation   ($\rho=0.3$)','Interpreter','latex','FontSize',20)    
+xlim([-0.5 max(n_vals)+0.5])
+ylim([-0.1 1.1])
+xlabel('$m$','Interpreter','latex','FontSize',20)
+ylabel('$\delta^{(m)}$','Interpreter','latex','FontSize',20)
+
+legend('Seeded', 'Unseeded')
+
+
+
+
 
 
 slp_plot=mean(fc_slp(:,1:slp_iter,q_int),2);
@@ -241,7 +270,17 @@ legend('SLP','FAQ/rQAP','FishkindFAQ')
 [ro_ell2_p,co_ell2_p]=find((obj_func_final_vals_proj_ell2(:,:,q_int)+5E-3)<obj_func_final_vals_proj_ell1(:,:,q_int));
 
 
-indices_JV=sub2ind(size(squeeze(obj_func_final_vals_JV)),ro_JV,co_JV,q_int);
-[obj_func_final_vals_JV(indices_JV) obj_func_final_vals_ell1(indices_JV)]
-indices_JV_p=sub2ind(size(squeeze(obj_func_final_vals_JV)),ro_JV_p,co_JV_p,q_int);
-[obj_func_final_vals_proj_JV(indices_JV_p) obj_func_final_vals_proj_ell1(indices_JV_p)]
+ mean([running_time_FAQ(:,1,q_int)  running_time_SLP(:,1,q_int)],1)
+
+
+std([running_time_FAQ(:,1,q_int)  running_time_SLP(:,1,q_int)],1,1)/sqrt(numiter)
+
+
+
+
+
+
+%indices_JV=sub2ind(size(squeeze(obj_func_final_vals_JV)),ro_JV,co_JV,q_int);
+%[obj_func_final_vals_JV(indices_JV) obj_func_final_vals_ell1(indices_JV)]
+%indices_JV_p=sub2ind(size(squeeze(obj_func_final_vals_JV)),ro_JV_p,co_JV_p,q_int);
+%[obj_func_final_vals_proj_JV(indices_JV_p) obj_func_final_vals_proj_ell1(indices_JV_p)]
