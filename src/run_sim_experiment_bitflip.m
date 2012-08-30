@@ -1,6 +1,6 @@
 
-%q= [0:0.05:0.5 ];
-q=[0 0.1 0.3 0.45 0.5];
+q= [0:0.05:0.5 ];
+%q=[0 0.1 0.3 0.45 0.5];
 q_len = length(q);
 
 
@@ -9,14 +9,14 @@ q_int=find(q==0.3);
 
 
 
-N=600;
-numiter=100;
+N=300;
+numiter=5;
 slp_iter =-1;
-%n_vals=[0:25 30 35 40 45];
+n_vals=[0:39 40:2:98 100:5:195 200:5:275  ];
 %n_vals=[0:1:5 6:2:20 20:5:35 ];
 %n_vals= [0:20 22 24 26];
 %n_vals=0:16
-n_vals=[ 0 1 5 15 17:2:25 30 35 40 60 80 100 300 450];
+%n_vals=[ 0 1 5 15 17:2:25 30 35 40 60 80 100 300 450];
 n_vals=n_vals(n_vals<N);
 P_jv_found=[]
 P_l1_found=[]
@@ -69,9 +69,9 @@ for q_i= 1:length(q)
             tic;
             [matching, iter, ~,fval_JV,fval_proj_JV,P_jv,P_proj_jv]=ConVogHard_rQAP_order(A,B,n_vals(n_i),ordering,1);
             
-            P_jv_cell{n_i,i}=P_jv(:,ordering);
+            %P_jv_cell{n_i,i}=P_jv(:,ordering);
             
-            P_jv_pr_cell{n_i,i}=P_proj_jv(:,ordering);
+            %P_jv_pr_cell{n_i,i}=P_proj_jv(:,ordering);
             running_time_FAQ(i,n_i,q_i)=toc;
             corr_match(n_i,i,q_i) =  sum(matching((n_vals(n_i)+1):N)==ordering((n_vals(n_i)+1):N));
             obj_func_final_vals_JV(n_i,i,q_i)=fval_JV;
@@ -88,8 +88,8 @@ for q_i= 1:length(q)
              if (q_i==q_int && i<=slp_iter )
             tic;
             [matching_slp,fval_ell1,fval_proj_ell1,P_l1,P_proj_l1] = seedgraphmatchell1(A(ordering,ordering),B(ordering,ordering),n_vals(n_i));
-            P_l1_cell{n_i,i} =  P_l1;
-            P_l1_pr_cell{n_i,i}= P_proj_l1;
+            %P_l1_cell{n_i,i} =  P_l1;
+            %P_l1_pr_cell{n_i,i}= P_proj_l1;
             running_time_SLP(i,n_i,q_i)=toc;
             corr_match_slp(n_i,i,q_i) =  sum(matching_slp((n_vals(n_i)+1):N)==(n_vals(n_i)+1):N);
             obj_func_final_vals_ell1(n_i,i,q_i)=fval_ell1;
@@ -129,7 +129,7 @@ for q_i= 1:length(q)
             matching_unseed=ConVogHard_rQAP(A_sub,B_sub,0);
             corr_match_unseed(n_i,i,q_i) =  sum(matching_unseed==1:(N-n_vals(n_i)));
             
-        save('./sim_result-600.mat')   
+        save('./sim_result-300.mat')   
         if found==1 
             break
         end
@@ -179,7 +179,7 @@ for i= 1:q_len
     q_i=q(i);
 avg_line=mean(fc(:,:,i),2);
 sd_line = std(fc(:,:,i),1,2);
-    %plot (n_vals(1:5),avg_line(1:5,:),colors{i},'LineWidth',2)
+   % plot (n_vals,avg_line,'Color',figcolors(i*incr,:),'LineWidth',2)
     errorbar (n_vals,avg_line,2*sd_line/sqrt(numiter),'Color',figcolors(i*incr,:),'LineWidth',2)
     hold on
 end
@@ -198,7 +198,7 @@ qvals= num2str(q');
 
 legend(qvals)   
 title('Simulation','FontSize',20)    
-xlim([-0.5 max(n_vals)+0.5])
+xlim([-5 max(n_vals)+2])
 ylim([-0.1 1.1])
 
 figure
