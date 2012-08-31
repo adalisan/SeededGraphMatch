@@ -1,5 +1,4 @@
 %Randomization from system
-function [] = run_sim_bitflip_single_job( job_i)
 
 [status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
 seed=str2double(seed);
@@ -154,7 +153,6 @@ fc_ell2= pc_ell2./repmat((N-n_vals'),[1 numiter length(q)]);
 
 pc_unseed=corr_match_unseed;
 fc_unseed= pc_unseed./repmat((N-n_vals'),[1 numiter length(q)]);
-fname = strcat('sim_bitflip_', num2str(job_i) , '.mat')
+fname = strcat('sim_bitflip_', datestr(clock) , '.mat')
 save(fname)
 
-end
