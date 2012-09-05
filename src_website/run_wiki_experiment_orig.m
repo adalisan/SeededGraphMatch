@@ -3,11 +3,11 @@ function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_wik
 
 %Function run_wiki_experiment_orig
 %[fc,sd_fc,random_chance,n_vals,num_iter]=run_wiki_experiment_orig(n_vals,num_iter)
-% input arguments 
+% input arguments
 % n_vals: number of hardseeds
 % num_iter: Number of MC replicates
 %
-% return arguments 
+% return arguments
 % fc : fraction of correct matches
 % sd_fc : standard error of fc
 % random_chance : expected number of correct matches under chance
@@ -36,29 +36,29 @@ find(rowsum_E==0);
 rowsum_F=sum(GF,2);
 find(rowsum_F==0);
 
-%n_vals=[0 1 5 10 20 50 100 200 300 350 400 450];
+
 n_vals = n_vals((n_vals<N_all));
-%num_iter = 50;
+
 corr_match=zeros(length(n_vals),num_iter);
 corr_match_no_seed=zeros(length(n_vals),num_iter);
- for i=1:num_iter
+for i=1:num_iter
     i
     for n_i = 1:length(n_vals)
-    	n_i
+        n_i
         % A random ordering for such that the first n_vals(n_i) are seeds
-    ordering=randperm(N_all);
+        ordering=randperm(N_all);
         
         matching=ConVogHard_rQAP_order(GE,GF,n_vals(n_i),ordering,1);
-    test_v=(n_vals(n_i)+1):N_all;
+        test_v=(n_vals(n_i)+1):N_all;
         %Number of correct matches among test vertices
-    corr_match(n_i,i) =  sum(matching(test_v)==ordering(test_v));
-    test_v_ord=sort(ordering(test_v));
+        corr_match(n_i,i) =  sum(matching(test_v)==ordering(test_v));
+        test_v_ord=sort(ordering(test_v));
         
         %Match with no seeds
-    matching_no_seed=ConVogHard_rQAP(GE(test_v_ord,test_v_ord),GF(test_v_ord,test_v_ord), ...
-        0);
-    corr_match_no_seed(n_i,i) =  sum(matching_no_seed==(1:(N_all-n_vals(n_i))));
-    save('wiki-all-orig.mat')
+        matching_no_seed=ConVogHard_rQAP(GE(test_v_ord,test_v_ord),GF(test_v_ord,test_v_ord), ...
+            0);
+        corr_match_no_seed(n_i,i) =  sum(matching_no_seed==(1:(N_all-n_vals(n_i))));
+        save('wiki-all-orig.mat')
     end
 end
 
@@ -73,9 +73,11 @@ fc_noseed=pc_noseed./(N_all-n_vals');
 sd_pc_noseed = std(corr_match_no_seed,0,2);
 sd_fc_noseed= sd_pc_noseed./(N_all-n_vals');
 
-random_chance= 1./(N_all-n_vals');
+
 'Wiki Finished'
+random_chance= 1./(N_all-n_vals');
 if plot_fig
+
 
 figure
 

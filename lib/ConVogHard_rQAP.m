@@ -24,8 +24,11 @@ B12=B(1:m,m+1:m+n);
 B21=B(m+1:m+n,1:m);
 B22=B(m+1:m+n,m+1:m+n);
 
-
+%Maximum number of iterations
 patience=25;
+
+% change ratio in function value for stopping criterion
+%If change ratio is lower, the iterations terminate
 tol=1E-3;
 epsilon=0.01;
 P=ones(n,n)/n;
@@ -48,9 +51,13 @@ while (toggle==1)&(iter<patience)
     alpha=-(d-2*e+u-v)/(2*(c-d+e));
     f0=e+v;
     f1=c+u;
+    %Funcion value at alpha
     falpha=(c-d+e)*alpha^2+(d-2*e+u-v)*alpha+e+v;
+    
+    %current function value (value at alpha=0)
      fvals(iter,1)=f1;
     fvals(iter,2)=falpha;
+    %f0:  function value at alpha=0
     fvals(iter,3)=f0;
     fvals(iter,4)= norm(Grad,2);
     alpha_vals(iter+1) = alpha;

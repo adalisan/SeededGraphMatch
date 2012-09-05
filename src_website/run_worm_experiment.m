@@ -2,12 +2,12 @@ function [fc,sd_fc,random_chance,n_vals,num_iter]=run_worm_experiment(n_vals,num
 %Function run_worm_experiment
 %[fc,sd_fc,random_chance,n_vals,num_iter] =
 % run_worm_experiment(n_vals,num_iter,binarize,symmetrize)
-% input arguments 
+% input arguments
 % n_vals: number of hardseeds
 % num_iter: Number of MC replicates
 % binarize: if nonzero, turn the edge weight (numerical) matrices to (binary) adjacency matrices
 % symmetrize: if nonzero, make the matrices symmetric.
-% return arguments 
+% return arguments
 % fc : fraction of correct matches
 % sd_fc : standard error of fc
 % random_chance : expected number of correct matches under chance
@@ -26,18 +26,18 @@ if (binarize)
     if (symmetrize)
         GE = GE+GE';
         GF=GF+GF';
-GE= (GE>0);
-
-GF= (GF>0); 
+        GE= (GE>0);
+        
+        GF= (GF>0);
     else
-  GE= (GE>0);
-
-GF= (GF>0); 
+        GE= (GE>0);
+        
+        GF= (GF>0);
     end
 else
     GE=(GE+(GE'))/2;
     GF=(GE+(GF'))/2;
-     
+    
 end
 
 
@@ -51,21 +51,20 @@ N = N_init
 GE=GE(1:N,1:N);
 GF=GF(1:N,1:N);
 rowsum_E=sum(GE,2);
-%There's no hope of matching the following vertices more correctly than chance
-unconnected_verts_G1=find(rowsum_E==0)
-rowsum_F=sum(GF,2);
-unconnected_verts_G2=find(rowsum_F==0)
 
-%n_vals=[0 1 5 10 20 50 75 100 150 200 300 350 400 450];
+unconnected_verts_G1=find(rowsum_E==0);
+rowsum_F=sum(GF,2);
+unconnected_verts_G2=find(rowsum_F==0);
+
 n_vals = n_vals((n_vals<N));
 %num_iter = 50;
 corr_match=zeros(length(n_vals),num_iter);
 for n_i = 1:length(n_vals)
     for i=1:num_iter
-    i
-    ordering=randperm(N);
-    matching=ConVogHard_rQAP_order(GE,GF,n_vals(n_i),ordering,1);
-    corr_match(n_i,i) =  sum(matching(n_vals(n_i)+1:N)==ordering(n_vals(n_i)+1:N))
+        i
+        ordering=randperm(N);
+        matching=ConVogHard_rQAP_order(GE,GF,n_vals(n_i),ordering,1);
+        corr_match(n_i,i) =  sum(matching(n_vals(n_i)+1:N)==ordering(n_vals(n_i)+1:N));
     end
 end
 
@@ -74,7 +73,6 @@ pc=mean(corr_match,2);
 fc=pc./(N-n_vals');
 sd_pc = std(corr_match,0,2);
 sd_fc= sd_pc./(N-n_vals');
-
 
 'Connectome Finished'
 
@@ -86,14 +84,12 @@ hold on
 
 plot(n_vals,random_chance,'k-.','LineWidth',2)
 
-
-%title('C. Elegans Connectome- Achem vs Agap (Simple Graph) ')
 title('C. Elegans','FontSize',20)
 
 xlabel('$m$','Interpreter','latex','FontSize',20)
 ylabel('$\delta^{(m)}$','Interpreter','latex','FontSize',20)
 xlim([-5 max(n_vals)+5])
-%legend('Unweighted','Weighted','Chance')
+
 
 
 

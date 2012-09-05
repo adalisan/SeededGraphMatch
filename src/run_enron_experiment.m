@@ -64,11 +64,17 @@ N_2_neigh_anomaly =  [  ...
 130 133 134 137 138 140 141 144 146 147 148 149 150 155 157 158 160 164 165  ...
  167 174 176 177 180 183 ];
 iter_in_test=zeros(N,length(n_vals));
+
+% If there is a  list of "anomalous" vertices that are known to be not very
+% well across time_stamps, and want to consider them as test_vertices for every replicate,
+% put them in N_2_neigh_anomaly
 for n_i = 1:length(n_vals)
     for i=1:num_iter
     i
     ordering = randperm(N);
-    
+        %Modify the ordering to keep  N_2_neigh_anomaly vertices among test
+        %vertices to be matched
+        if (length(N_2_neigh_anomaly)>0)
      keep_in_test = randsample( N_2_neigh_anomaly,min(N-n_vals(n_i),length(N_2_neigh_anomaly)));
       for l=1:length(keep_in_test)
          change_index= ordering==keep_in_test(l);
@@ -76,11 +82,12 @@ for n_i = 1:length(n_vals)
          ordering(n_vals(n_i)+l)= keep_in_test(l);
          ordering(change_index)= tmp;
       end
+        end
      
     ordering(1:n_vals(n_i)) = sort(ordering(1:n_vals(n_i)));
     ordering(n_vals(n_i)+1:N) = sort(ordering(n_vals(n_i)+1:N));
     iter_in_test(ordering(n_vals(n_i)+1:N),n_i) = iter_in_test(ordering(n_vals(n_i)+1:N),n_i) + 1;
-    matching=ConVogHard_rQAP_order(GE,GF,n_vals(n_i),ordering);
+        matching=ConVogHard_rQAP_order(GE,GF,n_vals(n_i),ordering,1);
     corr_match(n_i,i) =  sum(matching(n_vals(n_i)+1:N)==ordering(n_vals(n_i)+1:N));
     if (n_vals(n_i)==num_seeds_look_at)
         mismatched_ind=find(matching(n_vals(n_i)+1:N)~=ordering(n_vals(n_i)+1:N));
@@ -92,11 +99,11 @@ for n_i = 1:length(n_vals)
     end
 end
 
-pc=mean(corr_match,2)
-sd_pc = std(corr_match,0,2)
+pc=mean(corr_match,2);
+sd_pc = std(corr_match,0,2);
 
-fc= pc./(N-n_vals')
-sd_fc= sd_pc./(N-n_vals')
+fc= pc./(N-n_vals');
+sd_fc= sd_pc./(N-n_vals');
 
 'Enron Finished'
 
