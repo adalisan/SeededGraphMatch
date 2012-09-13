@@ -13,6 +13,9 @@ function [ corr,iter ] = seedgraphmatchell2( A,B,m )
 % >> [corr,P] = seedgraphmatchell2( A,B,5 ) ; [v; corr]
 % ready June 1, 2012   (Donniell's code)
 % (Extends Vogelstein, Conroy et al method for nonseed graphmatch to seed)
+% Original Code by Donniell Fishkind,
+% Sancar Adali: replaced "YiCaoHungarian"  with faster "lapjv" 
+% Same or similar with ConVogHard*
 
 [totv,~]=size(A);
 n=totv-m;
@@ -33,7 +36,7 @@ iter=0;
 while (toggle==1)&(iter<patience)
     iter=iter+1;
     Grad=A22*P*B22'+A22'*P*B22+A21*B21'+A12'*B12;
-    ind=YiCaoHungarian(-Grad);
+    ind=lapjv(-Grad,0.01);
     T=eye(n);
     T=T(ind,:);
     c=trace(A22'*P*B22*P');
@@ -53,6 +56,6 @@ while (toggle==1)&(iter<patience)
         toggle=0;
     end
 end
-corr=YiCaoHungarian(-P);
+corr=lapjv(-P,0.01);
 corr=[ 1:m,  m+corr];
 

@@ -1,7 +1,5 @@
-function [corr,fval,fval_after_proj,P,P_proj] = seedgraphmatchell1( A,B,m )
-% [corr,P] = seedgraphmatchell1( A,B,m ) is the syntax.
-% Author Donniell Fishkind
-%
+function [corr,fval,fval_after_proj,P,P_proj] = seedgraphmatchell1_YiCao( A,B,m )
+% [corr,P] = seedgraphmatchell1_YiCao( A,B,m ) is the syntax.
 %  A,B are (m+n)x(m+n) adjacency matrices, 
 % loops/multiedges/directededges allowed.
 % It is assumed that the first m vertices of A's graph
@@ -13,9 +11,9 @@ function [corr,fval,fval_after_proj,P,P_proj] = seedgraphmatchell1( A,B,m )
 %  example: EXECUTE the following:
 % >> v=[ [1:5] 5+randperm(35)]; B=round(rand(40,40));A=B(v,v);
 % >> [corr,P] = seedgraphmatchell1( A,B,5 ) ; [v corr]
+% ready June 10, 2012
 
-%uses lapjv instead of YiCaoHungarian
-
+uses  YiCaoHungarian
 [totalmn,~]=size(A);
 n=totalmn-m;
 
@@ -54,12 +52,10 @@ P=[];
 for i=1:n
     P=[P x((i-1)*n+1:i*n)];
 end
-P=[ eye(m) zeros(m,n) ; zeros(n,m) P];
-corr=lapjv(-P,0.01);
-
-
-%assign_of_test_v=lapjv(-P,0.01);
-%corr= [1:m m+assign_of_test_v];
+%P=[ eye(m) zeros(m,n) ; zeros(n,m) P];
+%corr=lapjv(-P,0.01);
+assign_of_test_v=YiCaoHungarian(-P);
+corr= [1:m m+assign_of_test_v];
 fval= sum(sum(abs( A*P-P*B)));
 
 
@@ -67,6 +63,5 @@ fval= sum(sum(abs( A*P-P*B)));
  P_proj=P_proj(corr,:);
 
 fval_after_proj= sum(sum(abs(A*P_proj-P_proj*B)));
-
 end
 

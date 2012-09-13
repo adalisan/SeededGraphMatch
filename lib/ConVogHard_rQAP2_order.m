@@ -1,33 +1,39 @@
-function [ corr,iter ,fvals] = ConVogHard_rQAP2( A,B,m )
+function [ corr,iter ,fvals] = ConVogHard_rQAP2_order( A,B,m )
 
-% [corr,iter] = ConVogHard_rQAP2( A,B,m ) is the syntax.
+%[ corr,iter ,fvals] = ConVogHard_rQAP2_order( A,B,m ) is the syntax.
 %  A,B are (m+n)x(m+n) adjacency matrices, 
 % loops/multiedges/directededges allowed.
 % m : the number of hard seeds to try (if it is a vector, all the values
 % are used in turn)
-
-% Uses rQAP2 formulation of D.  Fishkind for SGM
-% which is a minimization problem as opposed max. for rQAP (aka FAQ)
-% It is assumed that the first m vertices of A's graph
-% correspond respectively to the first m vertices of B's graph,
+% ordering : the indices of vertices such that the first m  are used as 
+% seeds for m number of seeds and the remaining n vertices are matched (*)
+% useJV : 1 if the faster JV algorithm is used for the linear assignment
+% subproblem
+%
+% (*) It is assumed that the  m vertices  of A's graph listed in the vector
+% ordering(1:m) correspond respectively to the m vertices  of B's graph with the same indices,
+% the seeds are  the vertices in A's graph and in B's graph with indices in  ordering(1:m).
 % corr gives the vertex correspondences  
 % For example, corr=[ 1 2 7 16 30 ...
-% means that the vtx1ofA-->vtx1ofB, 2-->2, 3-->7, 4-->16, 5-->30 
+% means that the vtx_ordering(1)_of_A-->vtx_1_of_B, ordering(2)-->2, ordering(3)-->7, ordering(4)-->16, ordering(5)-->30 
+% that is, the vertex of A with the index ordering(i) is matched to vertex of B with
+% the index corr(i)
 %  example: EXECUTE the following:
 % >> v=[ [1:5] 5+randperm(400)]; B=round(rand(405,405));A=B(v,v);
-% >> [corr,P] = ConVogHard_rQAP2( A,B,5 ) ; [v; corr]
-% Sept 13, 2012   (Sancar's code)
+% >> [corr,P] = ConVogHard_rQAP2_order( A,B,5,1:(m+n),1 ) ; [v; corr]
+% ready June 1, 2012   (Sancar's code)
+% modified from ConVogHard_rQAP2 
 
 
 [totv,~]=size(A);
 n=totv-m;
 
-A12=A(1:m,m+1:m+n);
-A21=A(m+1:m+n,1:m);
-A22=A(m+1:m+n,m+1:m+n);
-B12=B(1:m,m+1:m+n);
-B21=B(m+1:m+n,1:m);
-B22=B(m+1:m+n,m+1:m+n);
+A12=A(ordering(1:m),ordering(m+1:m+n));
+A21=A(ordering(m+1:m+n),ordering(1:m));
+A22=A(ordering(m+1:m+n),ordering(m+1:m+n));
+B12=B(ordering(1:m),ordering(m+1:m+n));
+B21=B(ordering(m+1:m+n),ordering(1:m));
+B22=B(ordering(m+1:m+n),ordering(m+1:m+n));
 
 
 patience=25;
