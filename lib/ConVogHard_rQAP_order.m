@@ -44,7 +44,7 @@ toggle=1;
 iter=0;
 fvals = zeros(patience+1,4);
 alpha_vals =zeros(1,patience+1);
-while (toggle==1)&&(iter<patience)
+while (toggle==1)&(iter<patience)
     iter=iter+1;
     Grad=A22*P*B22'+A22'*P*B22+A21*B21'+A12'*B12;
     ind=[];
@@ -63,7 +63,7 @@ while (toggle==1)&&(iter<patience)
     alpha=-(d-2*e+u-v)/(2*(c-d+e));
     f0=e+v;
     f1=c+u;
-    %Funcion value at alpha
+    %Function value at alpha
     falpha=(c-d+e)*alpha^2+(d-2*e+u-v)*alpha+e+v;
     %current function value (value at alpha=0)
      fvals(iter,1)=f1;

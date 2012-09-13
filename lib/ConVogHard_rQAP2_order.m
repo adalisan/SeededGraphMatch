@@ -1,6 +1,6 @@
-function [ corr,iter ,fvals] = ConVogHard_rQAP2_order( A,B,m )
+function [ corr,iter ,fvals] = ConVogHard_rQAP2_order( A,B,m ,ordering)
 
-%[ corr,iter ,fvals] = ConVogHard_rQAP2_order( A,B,m ) is the syntax.
+%[ corr,iter ,fvals] = ConVogHard_rQAP2_order( A,B,m,ordering ) is the syntax.
 %  A,B are (m+n)x(m+n) adjacency matrices, 
 % loops/multiedges/directededges allowed.
 % m : the number of hard seeds to try (if it is a vector, all the values
@@ -98,6 +98,7 @@ while (toggle==1)&&(iter<patience)
     fvals(iter,3)=f0;
     alpha_vals(iter+1) = alpha;
     fvals(iter,4)= norm(Grad,2); 
+    newfval=falpha;
     if ((alpha>0)&&(falpha<f0)&&(falpha<f1))
         P=alpha*P+(1-alpha)*T;
          newfval=falpha;
@@ -113,6 +114,6 @@ while (toggle==1)&&(iter<patience)
 end
 alpha_vals;
 corr=lapjv(-P,0.01);
-corr=[ 1:m,  m+corr];
+corr=[ ordering(1:m), ordering( m+corr)];
 
 
