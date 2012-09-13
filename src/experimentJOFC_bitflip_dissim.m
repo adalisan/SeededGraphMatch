@@ -98,7 +98,7 @@ for q_i= 1:length(q)
             
             evalR('jofc.res.1<-as.matrix(jofc.result.shortest.path[[1]])')
             Diss_mat=getRdata('jofc.res.1');
-              matching = YiCaoHungarian(Diss_mat);
+              matching = lapjv(Diss_mat,0.01);
              truematch_shortest_path(q_i) = sum(matching == 1:n);
              
              evalR('jofc.result.diffusion <- try(JOFC.graph.custom.dist(G=At,Gp=Bt, in.sample.ind=insample_logic_vec,  d.dim=embed.dim,w.vals.vec=w_vals_vec,graph.is.directed=FALSE,vert_diss_measure="diffusion"))')
