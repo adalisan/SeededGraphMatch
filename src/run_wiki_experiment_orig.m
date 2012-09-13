@@ -12,6 +12,15 @@ function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_wik
 % sd_fc : standard error of fc
 % random_chance : expected number of correct matches under chance
 load('wiki_adj.mat')
+try
+[status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
+seed=str2double(seed);
+rng(seed);
+catch
+    rng shuffle
+    'If running in parallel, parallel simulation might have the same random seed'
+    'Check the seeds for uniqueness'    
+end
 currseed= rng();
 save('random_rng.mat','currseed')
 

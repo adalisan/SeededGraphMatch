@@ -1,4 +1,4 @@
-function [pc,pcjofc] = experiment(n,maxm,numiter)
+function [pc,pcjofc] = experiment_lap_jofc_group(n,maxm,numiter)
 
 pc=zeros(1,maxm+1);
 pcjofc = zeros(1,maxm+1);
@@ -18,7 +18,7 @@ for i=1:numiter
     for j=0:maxm
         At=A(maxm-j+1:maxm+n,maxm-j+1:maxm+n);
         Bt=B(maxm-j+1:maxm+n,maxm-j+1:maxm+n);
-        bij=graphmatchHARDSEED(At,Bt,j);
+        bij= graphmatchHARDSEED(At,Bt,j);
         pc(j+1)=pc(j+1)+sum(bij(j+1:j+n)'==[j+1:j+n])/n;
         embed.dim =2;
         if (j<=2)
