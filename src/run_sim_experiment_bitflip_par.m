@@ -1,3 +1,5 @@
+% (Multicore computer) Parallel version of run_sim_experiment_bitflip using parfor
+
 %Randomization from system
 
 %[status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');

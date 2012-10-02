@@ -44,7 +44,7 @@ toggle=1;
 iter=0;
 fvals = zeros(patience+1,4);
 alpha_vals =zeros(1,patience+1);
-while (toggle==1)&&(iter<patience)
+while ((toggle==1)&&(iter<patience))
     iter=iter+1;
     Grad=-2*A21*B21'-2*A12'*B12+2*P*(B21*B21')+2*(A12'*A12)*P+2*((A22'*A22*P)+ ...
         P*(B22*B22') - A22'*P*B22-A22*P*B22');

@@ -1,8 +1,13 @@
 function [ corr,iter ,fvals] = ConVogHard_hybrid( A,B,m )
 
-% [corr,iter] = ConVogHard( A,B,m ) is the syntax.
+% [corr,iter] = ConVogHard_hybrid( A,B,m ) is the syntax.
 %  A,B are (m+n)x(m+n) adjacency matrices, 
 % loops/multiedges/directededges allowed.
+% m : the number of hard seeds to try (if it is a vector, all the values
+% are used in turn)
+
+% Uses rQAP/rQAP2 (sucessive relaxation) formulation of D.  Fishkind for SGM
+% which is a minimization problem as opposed max. for rQAP (aka FAQ)
 % It is assumed that the first m vertices of A's graph
 % correspond respectively to the first m vertices of B's graph,
 % corr gives the vertex correspondences  
@@ -10,8 +15,8 @@ function [ corr,iter ,fvals] = ConVogHard_hybrid( A,B,m )
 % means that the vtx1ofA-->vtx1ofB, 2-->2, 3-->7, 4-->16, 5-->30 
 %  example: EXECUTE the following:
 % >> v=[ [1:5] 5+randperm(400)]; B=round(rand(405,405));A=B(v,v);
-% >> [corr,P] = ConVogHard( A,B,5 ) ; [v; corr]
-% ready June 1, 2012   (Donniell's code)
+% >> [corr,P] = ConVogHard_hybrid( A,B,5 ) ; [v; corr]
+% ready Sep 24, 2012   (Sancar's code)
 
 
 [totv,~]=size(A);
@@ -47,7 +52,7 @@ while (toggle==1)&&(iter<patience_1)
    % Grad=-2*A21*B21' - 2*A12'*B12 ...
    %      -2* A22'*P*B22 - 2*A22*P*B22';
     %Grad is the gradient of the function to be minimized
-    ind=YiCaoHungarian(Grad);
+    ind=lapjv(Grad,0.01);
     T=eye(n);
     T=T(ind,:);
     tempmat1 = r*(B21*B21'+B22*B22');
@@ -85,9 +90,12 @@ while (toggle==1)&&(iter<patience_1)
     alpha=-(d-2*e+u-v)/(2*(c-d+e));
     f0=e+v;
     f1=c+u;
+    %Function value at alpha
     falpha=(c-d+e)*alpha^2+(d-2*e+u-v)*alpha+e+v;
+    %current function value (value at alpha=0)
     fvals(iter,1)=f1;
     fvals(iter,2)=falpha;
+    %f0:  function value at alpha=0
     fvals(iter,3)=f0;
     alpha_vals(iter+1) = alpha;
     fvals(iter,4)= norm(Grad,2); 
@@ -104,52 +112,7 @@ while (toggle==1)&&(iter<patience_1)
         toggle=0;    
     end
 end
-% 
-% toggle=1;
-% 
-% while (toggle==1)&&(iter<patience_2)
-%     iter=iter+1;
-%     Grad=A22*P*B22'+A22'*P*B22+A21*B21'+A12'*B12;
-%     ind=YiCaoHungarian(-Grad);
-%   
-%     T=eye(n);
-%     T=T(ind,:);
-%     c=trace(A22'*P*B22*P');
-%     d=trace(A22'*T*B22*P')+trace(A22'*P*B22*T');
-%     e=trace(A22'*T*B22*T');
-%     u=trace(P'*A21*B21'+P'*A12'*B12);
-%     v=trace(T'*A21*B21'+T'*A12'*B12);
-%     alpha=-(d-2*e+u-v)/(2*(c-d+e));
-%     f0=e+v;
-%     f1=c+u;
-%     falpha=(c-d+e)*alpha^2+(d-2*e+u-v)*alpha+e+v;
-%      fvals(iter,1)=f1;
-%     fvals(iter,2)=falpha;
-%     fvals(iter,3)=f0;
-%     fvals(iter,4)= norm(Grad,2);
-%     alpha_vals(iter+1) = alpha;
-% %     if (isnan(falpha))
-% %     Grad
-% %     c-d+e
-% %     alpha
-% %     end
-%     newfval=0;
-%     if ((alpha>0)&&(falpha>f0)&&(falpha>f1))
-%         P=alpha*P+(1-alpha)*T;
-%          newfval=falpha;
-%     elseif (f0>(f1+epsilon))
-%         P=T;
-%         newfval=f0;
-%     else
-%         toggle=0;
-%     end
-%     if ((abs(newfval-f1)/abs(f1))<tol) 
-%         toggle=0;    
-%     end
-% end
-
-
 alpha_vals;
-corr=YiCaoHungarian(-P);
+corr=lapjv(-P,0.01);
 corr=[ 1:m,  m+corr];
 
