@@ -125,14 +125,19 @@ for n_i = 1:length(n_vals)
             corr_match_unwt(n_i,i) =  sum(matching_unwt(n_vals(n_i)+1:N)==ordering(n_vals(n_i)+1:N));
         end
         test_v=(n_vals(n_i)+1):N;
-        
-        if  (compare_unseed &&(n_i==1))
+        % For n_vals(1)=0 , we match with no seeds, so the all of the vertices
+        % are matched and for different  i, we would get the same number of
+        % matchings.  so first entry of sd_pc_noseed  
+        % For other n_i, different i correspond to different seed 
+        % selections, so different  corr_match_no_seed are expected for
+        % different i.
+        if  (compare_unseed)
             test_v_ord=sort(ordering(test_v));
-            
+             num_match= length(test_v_ord);
             %Match with no seeds
             matching_unseed=ConVogHard_rQAP(GE(test_v_ord,test_v_ord),GF(test_v_ord,test_v_ord), ...
                 0);
-            corr_match_no_seed(n_i,i) =  sum(matching_unseed==(1:(N-n_vals(n_i))));
+            corr_match_no_seed(n_i,i) =  sum(matching_unseed==(1:num_match));
             
             
         end
