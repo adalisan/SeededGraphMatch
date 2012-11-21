@@ -17,6 +17,8 @@ function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter,fc_unwt,
 % random_chance : expected number of correct matches under chance
 
 load('./data/elegansGraph.mat')
+
+
 plot_graph =  0;
 
 
@@ -42,9 +44,28 @@ save('random_rng_state.mat','savedState')
 GE=Achem;
 GF=Agap;
 
+load('./data/elegansGraph_male.mat')
+
 N_dims=size(GE);
 N_init= N_dims(1)
 
+GE_male= Achem;
+GF_male= Agap;
+
+N_dims_m =size(GE_male);
+N_sec = N_dims_m[1];
+matched_v =(ismember(Neuron_ordered,Achem_names));
+common_v = sum(matched_v);
+GE_m = zeros(max(N_init,N_sec));
+GE_m(1:common_v,1:common_v) = GE_male;
+
+
+N_dims_m =size(GF_male);
+N_sec = N_dims_m[1];
+matched_v =(ismember(Neuron_ordered,Agap_names));
+common_v = sum(matched_v);
+GF_m = zeros(max(N_init,N_sec));
+GF_m(1:common_v,1:common_v) = GF_male;
 
 
 
@@ -56,32 +77,53 @@ if  (compare_wt_unwt)
        if (symmetrize)
       GE=(GE+(GE'))/2;
        GF=(GF+(GF'))/2;
+            GE_m=(GE_m+(GE_m'))/2;
+       GF_m=(v+(GF_m'))/2;
        end
     
-    GE_unwt =     double(GE>0);
-    
+    GE_unwt =     double(GE>0);    
     GF_unwt =     double(GF>0);
     
-    GE = GE;
-    GF = GF/norm(GF,'fro')* norm(GE,'fro');
+    GE_m_unwt =     double(GE_m>0);    
+    GF_m_unwt =     double(GF_m>0);
+    
+    
+    %GE = GE/ norm(GE,'fro');
+    %GF = GF/ norm(GF,'fro');
     
 elseif (binarize)
     if (symmetrize)
         GE = GE+GE';
         GF=GF+GF';
-        GE= double(GE>0);
+        
+           GE= double(GE>0);
         GF= double(GF>0);
+        
+          GE_m = GE_m+GE_m';
+        GF_m=GF_m+GF_m';
+        
+     
+        
+          GE_m= double(GE_m>0);
+        GF_m= double(GF_m>0);
     else
         GE= double(GE>0);
         GF= double(GF>0);
+        
+             GE_m= double(GE_m>0);
+        GF_m= double(GF_m>0);
     end
 else
     if (symmetrize)
     GE=(GE+(GE'))/2;
-    GF=(GF+(GF'))/2;
+    GF=(GE+(GF'))/2;
+    
+    GE_m=(GE_m+(GE_m'))/2;
+    GF_m=(GF_m+(GF_m'))/2;
+    
     end
-    GE = GE
-    GF = GF/ norm(GF,'fro')* norm(GE,'fro');
+    GE = GE/ norm(GE,'fro');
+    GF = GF/ norm(GF,'fro');
     
 end
 
@@ -92,8 +134,8 @@ GF= full(GF);
 GE_unwt= full(GE_unwt);
 GF_unwt= full(GF_unwt);
 
-is_sym_GE =   sum(sum((GE-GE')~=0));
-is_sym_GF =   sum(sum((GF-GF')~=0));
+is_sym_GE =   sum((GE-GE')~=0)
+is_sym_GF =   sum((GF-GF')~=0)
 
 N = N_init;
 GE=GE(1:N,1:N);

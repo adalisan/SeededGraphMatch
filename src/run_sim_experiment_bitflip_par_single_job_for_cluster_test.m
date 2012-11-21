@@ -4,11 +4,8 @@
 seed=str2double(seed);
 rng(seed);
 
-
-
-
-q= [0:0.05:0.5 ];
-%q=[0 0.1 0.3 0.45 0.5];
+%q= 0:0.05:0.5 ;
+q=[0 0.1 0.3 0.45 0.5];
 q_len = length(q);
 
 
@@ -17,8 +14,8 @@ q_int=find(q==0.3);
 
 
 
-N=300;
-numiter=1;
+N=20;
+numiter=2;
 slp_iter =-1;
 n_vals=[0:39 40:2:98 100:5:195 200:5:275  ];
 %n_vals=[0:1:5 6:2:20 20:5:35 ];
@@ -47,10 +44,6 @@ running_time_SLP=zeros(numiter,n_len,q_len);
 corr_match=zeros(n_len,numiter,q_len);
 
 corr_match_ell2=zeros(n_len,numiter,q_len);
-corr_match_rqap=zeros(n_len,numiter,q_len);
-corr_match_rqap2=zeros(n_len,numiter,q_len);
-
-
 corr_match_unseed=zeros(n_len,numiter,q_len);
 corr_match_slp=zeros(n_len,numiter,q_len);
 corr_match_slp_ord=zeros(n_len,numiter,q_len);
@@ -89,25 +82,16 @@ for i=1:numiter
             test_ind = (n_val_for_i+1):N;
             test_v =ordering(test_ind);
             tic;
-            [matching, iter]=ConVogHard_rQAP2_order(A,B,n_val_for_i,ordering);
+            [matching, iter, ~,fval_JV,fval_proj_JV,P_jv,P_proj_jv]=ConVogHard_rQAP_order(A,B,n_val_for_i,ordering,1);
             
             %P_jv_cell{n_i,i}=P_jv(:,ordering);
             
             %P_jv_pr_cell{n_i,i}=P_proj_jv(:,ordering);
             %running_time_FAQ(i,n_i,q_i)=toc;
             matched_v=matching(test_ind);
-            corr_match_rqap2(n_i,i,q_i) =  sum(matched_v==test_v);
-            %obj_func_final_vals_JV(n_i,i,q_i)=fval_JV;
-            %obj_func_final_vals_proj_JV(n_i,i,q_i)=fval_proj_JV;
-	     [matching_rqap, iter]=ConVogHard_rQAP_order(A,B,n_val_for_i,ordering,1);
-            
-            %P_jv_cell{n_i,i}=P_jv(:,ordering);
-            
-            %P_jv_pr_cell{n_i,i}=P_proj_jv(:,ordering);
-            %running_time_FAQ(i,n_i,q_i)=toc;
-            matched_v_rqap=matching_rqap(test_ind);
-            corr_match_rqap(n_i,i,q_i) =  sum(matched_v_rqap==test_v);
-            
+            corr_match(n_i,i,q_i) =  sum(matched_v==test_v);
+            obj_func_final_vals_JV(n_i,i,q_i)=fval_JV;
+            obj_func_final_vals_proj_JV(n_i,i,q_i)=fval_proj_JV;
             
             %             [matching_ell2, iter,~,fval_ell2, fval_proj_ell2,P_l2,P_proj_l2]=seedgraphmatchell2_order(A,B,n_val_for_i,ordering,1);
             %
@@ -143,26 +127,29 @@ for i=1:numiter
     end
 end
 
- pc = corr_match_rqap;
+ pc = corr_match;
+ 
 fc= pc./repmat((N-n_vals'),[1 numiter length(q)]);
 
-
-
 pc_slp = corr_match_slp;
+
 fc_slp= pc_slp./repmat((N-n_vals'),[1 numiter length(q)]);
 
 
-pc_rqap2 = corr_match_rqap2;
-fc_rqap2= pc_rqap2./repmat((N-n_vals'),[1 numiter length(q)]);
+pc_slp_ord = corr_match_slp_ord;
 
+fc_slp_ord= pc_slp_ord./repmat((N-n_vals'),[1 numiter length(q)]);
+
+pc_slp_YiCao = corr_match_slp_YiCao;
+
+fc_slp_YiCao= pc_slp_YiCao./repmat((N-n_vals'),[1 numiter length(q)]);
 
 pc_ell2 = corr_match_ell2;
+
 fc_ell2= pc_ell2./repmat((N-n_vals'),[1 numiter length(q)]);
 
 pc_unseed=corr_match_unseed;
 fc_unseed= pc_unseed./repmat((N-n_vals'),[1 numiter length(q)]);
-
-
-fname = strcat('./cache/rqap2/sim_bitflip_', datestr(clock) ,int2str(uint32(randi(1E6,1))), '.mat')
+fname = strcat('sim_bitflip_', datestr(clock) ,randi(1E6,1), '_test.mat')
 save(fname)
 

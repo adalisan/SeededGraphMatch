@@ -1,6 +1,10 @@
 
+%Run sim for directed graph (unsymmetrized adj or weight matrices)
+[fc_dir,sd_fc_dir,fc_unseed_dir,sd_fc_unseed_dir,~,~,~,fc_unwt_dir,sd_fc_unwt_dir]=run_worm_experiment([0:2:20 20:5:95  100: 10:200 ] ,1,0,0,1,1);
 
-[fc,sd_fc,fc_seed,sd_fc_seed,random_chance,n_vals,num_iter,fc_unwt,sd_fc_unwt]=run_worm_experiment([0:2:20 20:5:95  100: 10:200 ] ,1,0,0,1);
 
-fname = strcat('wiki_', datestr(clock) ,randi(1E6,1), '.mat')
+
+%Run sim for undirected graph (symmetrized adj or weight matrices)
+[fc,sd_fc,fc_seed,sd_fc_seed,random_chance,n_vals,num_iter,fc_unwt,sd_fc_unwt]=run_worm_experiment([0:2:20 20:5:95  100: 10:200 ] ,1,0,1,1,1);
+fname = strcat('./cache/worm/worm_', datestr(clock) ,int2str(uint32(randi(1E3,1))),'.mat')
 save(fname)
