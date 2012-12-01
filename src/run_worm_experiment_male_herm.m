@@ -53,15 +53,15 @@ GE_male= Achem;
 GF_male= Agap;
 
 N_dims_m =size(GE_male);
-N_sec = N_dims_m[1];
-matched_v =(ismember(Neuron_ordered,Achem_names));
+N_sec = N_dims_m(1);
+matched_v =(ismember(Neuron_ordered,neuron_names));
 common_v = sum(matched_v);
 GE_m = zeros(max(N_init,N_sec));
 GE_m(1:common_v,1:common_v) = GE_male;
 
 
 N_dims_m =size(GF_male);
-N_sec = N_dims_m[1];
+N_sec = N_dims_m(1);
 matched_v =(ismember(Neuron_ordered,Agap_names));
 common_v = sum(matched_v);
 GF_m = zeros(max(N_init,N_sec));
