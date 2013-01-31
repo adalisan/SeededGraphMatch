@@ -1,7 +1,7 @@
 
 function [fc,sd_fc,random_chance,corr_match,pc,sd_pc, ...
     mismatched_verts_G1,mismatched_verts_G2,iter_in_test]= ...
-    run_enron_experiment(n_vals,num_iter,time_stamp_G1,time_stamp_G2)
+    run_enron_experiment(n_vals,num_iter,time_stamp_G1,time_stamp_G2,symmetrize)
 %Function run_enron_experiment
 %[fc,sd_fc,random_chance,n_vals,num_iter]=run_enron_experiment(n_vals,num_iter,time_stamp_G1,time_stamp_G2)
 % input arguments 
@@ -23,6 +23,25 @@ if (~exist('AAA','var'))
     load('./data/enron.mat')
 end
 
+plot_graph=0;
+
+
+try
+[status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
+seed=str2double(seed);
+rng(seed);
+catch
+    rng shuffle
+    'If running in parallel, parallel simulation might have the same random seed'
+    'Check the seeds for uniqueness'    
+end
+currseed= rng();
+save('random_rng.mat','currseed')
+
+defaultStream = RandStream.getDefaultStream();
+savedState = defaultStream.State;
+save('random_rng_state.mat','savedState')
+
 
 
 
@@ -33,8 +52,14 @@ N_dims=size(GE)
 N_init= N_dims(1)
 
 N= N_init%floor(N_init/4)
-GE=GE(1:N,1:N);
-GF=GF(1:N,1:N);
+
+if (symmetrize)
+    GE=(GE+(GE'))/2;
+    GF=(GF+(GF'))/2;
+end
+    
+
+
 rowsum_E=sum(GE,2);
 find(rowsum_E==0)
 rowsum_F=sum(GF,2);
@@ -63,6 +88,11 @@ N_2_neigh_anomaly =  [  ...
   86  87  89  90  94  97  98 102 103 107 108 113 115 117 119 120 126 127 128 ...
 130 133 134 137 138 140 141 144 146 147 148 149 150 155 157 158 160 164 165  ...
  167 174 176 177 180 183 ];
+
+N_2_neigh_anomaly = [];
+
+
+
 iter_in_test=zeros(N,length(n_vals));
 
 % If there is a  list of "anomalous" vertices that are known to be not very
@@ -109,6 +139,7 @@ sd_fc= sd_pc./(N-n_vals');
 
 random_chance= 1./(N-n_vals');
 
+if (plot_graph)
 %figure
 
 % 
@@ -164,6 +195,7 @@ random_chance= 1./(N-n_vals');
 title('Enron graph matching, graphs at t=130, 131, 132')
 %legend('chance','130&131','131&132','130&132')
 xlim([-5 145]);
+end
 
 
 
