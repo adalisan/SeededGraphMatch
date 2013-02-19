@@ -1,17 +1,20 @@
+N= 100;
 
-figure
-rho_len= 6
-numiter = 20
-n_vals = [10 15 20 20 30 40 50 60 70 80 90 ];
+rho_len= length(rho);
+numiter = 20;
+n_vals =n_vals_bitflip;
 figcolors= colormap(jet);
 [num_colors,~]=size(figcolors);
 incr=floor(num_colors/rho_len);
+main_colors = { 'r' 'g' 'b'  'm'   'y' 'c' 'k'};
+
+
 for i= 1:rho_len
  
-    avg_line=mean(corr_results_agg(:,i,:),3);
-    sd_line = std(corr_results_agg(:,i,:),1,3);
+    avg_line = JOFC_corr_bitflip(:,i,4)./(N-n_vals);
+    sd_line = JOFC_corr_bitflip_sd(:,i,4)./(N-n_vals);
    % plot (n_vals,avg_line,'Color',figcolors(i*incr,:),'LineWidth',2)
-    errorbar (n_vals,avg_line,2*sd_line/sqrt(numiter),'Color',figcolors(i*incr,:),'LineWidth',2)
+    errorbar (n_vals,avg_line,2*sd_line,'Color',figcolors(i*incr,:),'LineWidth',2)
     hold on
 end
 
@@ -21,7 +24,7 @@ plot(n_vals,1./(N-n_vals),main_colors{length(main_colors)},'LineWidth',2)
 
 %avg_line=mean(fc_unseed(:,:,rho_int),2);
 %sd_line = std(fc_unseed(:,:,rho_int),1,2);
-rho = 0:0.1:0.5;
+
 %errorbar (n_vals,avg_line,2*sd_line/sqrt(numiter),'Color',figcolors(rho_int*incr,:), ...
 %    'LineStyle','-.','LineWidth',1.5)
 qvals= num2str(rho');

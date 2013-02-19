@@ -1,5 +1,5 @@
 %s = what; %look in current directory
-s=what('./cache/cluster_run') %change dir for your directory name 
+s=what('./cache/cluster_run/faq_rqap/') %change dir for your directory name 
 matfiles=s.mat;
 corr_match_agg=[];
 
