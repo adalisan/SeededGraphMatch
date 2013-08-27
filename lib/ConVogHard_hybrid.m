@@ -93,12 +93,13 @@ while (toggle==1)&&(iter<patience_1)
     %Function value at alpha
     falpha=(c-d+e)*alpha^2+(d-2*e+u-v)*alpha+e+v;
     %current function value (value at alpha=0)
-    fvals(iter,1)=f1;
-    fvals(iter,2)=falpha;
+    %fvals(iter,1)=f1;
+    %fvals(iter,2)=falpha;
     %f0:  function value at alpha=0
-    fvals(iter,3)=f0;
+    %fvals(iter,3)=f0;
     alpha_vals(iter+1) = alpha;
-    fvals(iter,4)= norm(Grad,2); 
+    %fvals(iter,4)= norm(Grad,2); 
+    newfval= falpha;
     if ((alpha>0)&&(falpha<f0)&&(falpha<f1))
         P=alpha*P+(1-alpha)*T;
          newfval=falpha;
