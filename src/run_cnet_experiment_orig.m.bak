@@ -1,8 +1,8 @@
 
-function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_wiki_experiment_orig(n_vals,num_iter,plot_fig)
+function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_cnet_experiment_orig(n_vals,num_iter,plot_fig)
 
 %Function run_wiki_experiment_orig
-%[fc,sd_fc,random_chance,n_vals,num_iter]=run_wiki_experiment_orig(n_vals,num_iter)
+%[fc,sd_fc,random_chance,n_vals,num_iter]=run_cnet_experiment_orig(n_vals,num_iter)
 % input arguments 
 % n_vals: number of hardseeds
 % num_iter: Number of MC replicates
@@ -11,7 +11,10 @@ function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_wik
 % fc : fraction of correct matches
 % sd_fc : standard error of fc
 % random_chance : expected number of correct matches under chance
-load('wiki_adj.mat')
+load('./data/cnet_Ajt.mat')
+
+
+
 try
 [status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
 seed=str2double(seed);
@@ -28,17 +31,16 @@ defaultStream = RandStream.getDefaultStream();
 savedState = defaultStream.State;
 save('random_rng_state.mat','savedState')
 
+'Loaded cnet adjacency matrix'
 
-'Loaded wiki adjacency matrix'
 
-
-N_dims=size(G_EN_Adj);
+N_dims=size(Ajt1);
 
 N_all= N_dims(1);
 
 
-GE=G_EN_Adj;
-GF=G_FR_Adj;
+GE=Ajt1;
+GF=Ajt2;
 
 rowsum_E=sum(GE,2);
 find(rowsum_E==0);
@@ -67,7 +69,7 @@ corr_match_no_seed=zeros(length(n_vals),num_iter);
     matching_no_seed=ConVogHard_rQAP(GE(test_v_ord,test_v_ord),GF(test_v_ord,test_v_ord), ...
         0);
     corr_match_no_seed(n_i,i) =  sum(matching_no_seed==(1:(N_all-n_vals(n_i))));
-    save('wiki-all-orig.mat')
+    save('cnet-all-orig.mat')
     end
 end
 

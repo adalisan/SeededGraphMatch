@@ -48,6 +48,25 @@ save('random_rng_state.mat','savedState')
 GE=AAA(:,:,time_stamp_G1);
 GF=AAA(:,:,time_stamp_G2);
 
+
+
+%There's no hope of matching the following vertices more correctly than chance
+row_E = (sum(GE,2)==0 ) ;
+col_E = (sum(GE,1)==0 ) ;
+row_F = (sum(GF,2)==0 ) ;
+col_F = (sum(GF,1)==0 ) ;
+
+unconnected_verts_G1=(row_E &col_E');
+
+unconnected_verts_G2= (row_F &col_F');
+unconnected_verts = unconnected_verts_G1 | unconnected_verts_G2;
+GE=GE(~unconnected_verts,~unconnected_verts);
+GF=GF(~unconnected_verts,~unconnected_verts);
+
+
+
+
+
 N_dims=size(GE)
 N_init= N_dims(1)
 

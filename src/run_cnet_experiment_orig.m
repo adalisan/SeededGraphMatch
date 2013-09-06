@@ -85,7 +85,7 @@ sd_pc_noseed = std(corr_match_no_seed,0,2);
 sd_fc_noseed= sd_pc_noseed./(N_all-n_vals');
 
 random_chance= 1./(N_all-n_vals');
-'Wiki Finished'
+'charitynet Finished'
 if plot_fig
 
 figure
@@ -93,7 +93,7 @@ figure
 
 hold on
 
-title('Wikipedia','FontSize',20)
+title('Charitynet','FontSize',20)
 errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-','LineWidth',2)
 hold on
 errorbar(n_vals,fc_noseed,2*sd_fc_noseed/sqrt(num_iter),'b-','LineWidth',2)
