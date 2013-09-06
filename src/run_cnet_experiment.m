@@ -14,7 +14,7 @@ function [fc,sd_fc,n_vals,num_iter]=run_cnet_experiment(N,n_vals,num_iter)
 % random_chance : expected number of correct matches under chance
 load('./data/cnet_Ajt.mat')
 
-print('Loaded cnet adjacency matrix')
+'Loaded cnet adjacency matrix'
 
 
 N_dims=size(Ajt1)
@@ -59,13 +59,13 @@ sd_pc = std(corr_match,0,2)
 sd_fc= sd_pc./N
 
 
-'Wiki Finished'
+'cnet Finished'
 figure
 %random_chance= 1./(N-n_vals');
 %plot(n_vals,fc,'r-')
 hold on
 
-title('Wiki article matching-500 randomly sampled vertices plus seeds')
+title('CNet article matching-350 randomly sampled vertices plus seeds')
 errorbar(n_vals,fc,2*sd_fc/sqrt(num_iter),'r-')
 xlabel('Number of Hard seeds')
 ylabel('Fraction of Correct Matches')
