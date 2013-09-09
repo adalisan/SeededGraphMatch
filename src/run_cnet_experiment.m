@@ -17,6 +17,20 @@ load('./data/cnet_Ajt.mat')
 print('Loaded cnet adjacency matrix')
 
 
+
+try
+[status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
+seed=str2double(seed);
+rng(seed);
+catch
+    rng shuffle
+    'If running in parallel, parallel simulation might have the same random seed'
+    'Check the seeds for uniqueness'    
+end
+rng shuffle
+
+
+
 N_dims=size(Ajt1)
 N_all= N_dims(1)
 

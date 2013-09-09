@@ -14,6 +14,8 @@ function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_cne
 load('./data/cnet_Ajt.mat')
 
 
+'Loaded cnet adjacency matrix'
+
 
 try
 [status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
@@ -24,14 +26,16 @@ catch
     'If running in parallel, parallel simulation might have the same random seed'
     'Check the seeds for uniqueness'    
 end
+
+
 currseed= rng();
+
+
 save('random_rng.mat','currseed')
 
 defaultStream = RandStream.getDefaultStream();
 savedState = defaultStream.State;
 save('random_rng_state.mat','savedState')
-
-'Loaded cnet adjacency matrix'
 
 
 N_dims=size(Ajt1);
