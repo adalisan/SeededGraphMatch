@@ -4,10 +4,7 @@
 seed=str2double(seed);
 rng(seed);
 
-
-
-
-q= [0:0.05:0.5 ];
+q= 0:0.05:0.5 ;
 %q=[0 0.1 0.3 0.45 0.5];
 q_len = length(q);
 
@@ -18,9 +15,11 @@ q_int=find(q==0.3);
 
 
 N=300;
-numiter=2;
+%N=100;
+numiter=1;
 slp_iter =-1;
-n_vals=[0:39 40:2:98 100:5:195 200:5:275  ];
+n_vals=[0:39 40:2:98  45   55    65   75 85 95 100:5:195 200:5:275  ];
+n_vals= sort(n_vals);
 %n_vals=[0:1:5 6:2:20 20:5:35 ];
 %n_vals= [0:20 22 24 26];
 %n_vals=0:16
@@ -153,6 +152,6 @@ fc_ell2= pc_ell2./repmat((N-n_vals'),[1 numiter length(q)]);
 
 pc_unseed=corr_match_unseed;
 fc_unseed= pc_unseed./repmat((N-n_vals'),[1 numiter length(q)]);
-fname = strcat('sim_bitflip_', datestr(clock) ,randi(1E6,1), '.mat')
+fname = strcat('sim_bitflip_', datestr(clock) , '.mat')
 save(fname)
 

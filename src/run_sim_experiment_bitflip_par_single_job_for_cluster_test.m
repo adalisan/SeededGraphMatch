@@ -150,6 +150,6 @@ fc_ell2= pc_ell2./repmat((N-n_vals'),[1 numiter length(q)]);
 
 pc_unseed=corr_match_unseed;
 fc_unseed= pc_unseed./repmat((N-n_vals'),[1 numiter length(q)]);
-fname = strcat('sim_bitflip_', datestr(clock) ,randi(1E6,1), '_test.mat')
+fname = strcat('sim_bitflip_', datestr(clock) , '.mat')
 save(fname)
 
