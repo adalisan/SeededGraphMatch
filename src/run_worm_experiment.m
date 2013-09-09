@@ -33,7 +33,7 @@ end
 currseed= rng();
 save('random_rng.mat','currseed')
 
-defaultStream = RandStream.getDefaultStream();
+defaultStream = RandStream.getGlobalStream ;
 savedState = defaultStream.State;
 save('random_rng_state.mat','savedState')
 
