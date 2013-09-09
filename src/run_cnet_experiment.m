@@ -27,7 +27,7 @@ catch
     'If running in parallel, parallel simulation might have the same random seed'
     'Check the seeds for uniqueness'    
 end
-rng shuffle
+
 
 
 

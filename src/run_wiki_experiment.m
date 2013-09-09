@@ -16,6 +16,21 @@ load('./data/wiki_adj.mat')
 
 print('Loaded wiki adjacency matrix')
 
+try
+[status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
+seed=str2double(seed);
+rng(seed);
+catch
+    rng shuffle
+    'If running in parallel, parallel simulation might have the same random seed'
+    'Check the seeds for uniqueness'    
+end
+currseed= rng();
+save('random_rng.mat','currseed')
+
+defaultStream = RandStream.getDefaultStream();
+savedState = defaultStream.State;
+save('random_rng_state.mat','savedState')
 
 N_dims=size(G_EN_Adj)
 N_all= N_dims(1)
