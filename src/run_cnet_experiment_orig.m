@@ -71,7 +71,7 @@ if (subset<N_all)
     GF=GF(subset_ind,subset_ind);
     
 end
-
+N_all=subset;
 
 %n_vals=[0 1 5 10 20 50 100 200 300 350 400 450];
 n_vals = n_vals((n_vals<N_all));
