@@ -54,8 +54,15 @@ GF=GF(~unconnected_verts,~unconnected_verts);
 Ajt1=double(GE);
 Ajt2=double(GF);
 
-%n_vals=[0 1 5 10 20 50 100 200 300 350 400 450];
 
+
+N_dims=size(Ajt1)
+N_all= N_dims(1)
+
+
+
+%n_vals=[0 1 5 10 20 50 100 200 300 350 400 450];
+n_vals = n_vals((n_vals<N_all));
 %num_iter = 50;
 corr_match=zeros(length(n_vals),num_iter);
 for i=1:num_iter

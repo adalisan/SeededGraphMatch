@@ -66,7 +66,7 @@ N_dims=size(GE);
 N_all= N_dims(1);
 
 if (subset<N_all)
-    subset_ind = rand(N_all,subset);
+    subset_ind = randperm(N_all,subset);
     GE=GE(subset_ind,subset_ind);
     GF=GF(subset_ind,subset_ind);
     
