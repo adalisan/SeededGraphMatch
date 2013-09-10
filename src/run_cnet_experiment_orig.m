@@ -1,7 +1,8 @@
 
-function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_cnet_experiment_orig(n_vals,num_iter,plot_fig)
+function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_cnet_experiment_orig(n_vals,num_iter,plot_fig,subset)
 
-%Function run_wiki_experiment_orig
+%Function run_cnet_experiment_orig
+%Carey's version of experiments
 %[fc,sd_fc,random_chance,n_vals,num_iter]=run_cnet_experiment_orig(n_vals,num_iter)
 % input arguments 
 % n_vals: number of hardseeds
@@ -38,18 +39,36 @@ savedState = defaultStream.State;
 save('random_rng_state.mat','savedState')
 
 
-N_dims=size(Ajt1);
+
+GE=uint16(Ajt1);
+GF=uint16(Ajt2);
+diag(GE)=0;
+diag(GF)=0;
+row_E = (sum(GE,2)==0 ) ;
+col_E = (sum(GE,1)==0 ) ;
+row_F = (sum(GF,2)==0 ) ;
+col_F = (sum(GF,1)==0 ) ;
+
+unconnected_verts_G1=(row_E &col_E');
+
+unconnected_verts_G2= (row_F &col_F');
+unconnected_verts = unconnected_verts_G1 | unconnected_verts_G2;
+GE=GE(~unconnected_verts,~unconnected_verts);
+GF=GF(~unconnected_verts,~unconnected_verts);
+GE=double(GE);
+GF=double(GF);
+
+N_dims=size(GE);
 
 N_all= N_dims(1);
 
+if (subset<N_all)
+    subset_ind = rand(N_all,subset);
+    GE=GE(subset_ind,subset_ind);
+    GF=GF(subset_ind,subset_ind);
+    
+end
 
-GE=Ajt1;
-GF=Ajt2;
-
-rowsum_E=sum(GE,2);
-find(rowsum_E==0);
-rowsum_F=sum(GF,2);
-find(rowsum_F==0);
 
 %n_vals=[0 1 5 10 20 50 100 200 300 350 400 450];
 n_vals = n_vals((n_vals<N_all));

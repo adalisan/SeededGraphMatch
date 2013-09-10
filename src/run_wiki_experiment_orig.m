@@ -1,6 +1,7 @@
 function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_wiki_experiment_orig(n_vals,num_iter,plot_fig)
 
 %Function run_wiki_experiment_orig
+%Carey's version of experiments
 %[fc,sd_fc,random_chance,n_vals,num_iter]=run_wiki_experiment_orig(n_vals,num_iter)
 % input arguments 
 % n_vals: number of hardseeds
@@ -11,6 +12,8 @@ function [fc,sd_fc,fc_noseed,sd_fc_noseed,random_chance,n_vals,num_iter]=run_wik
 % sd_fc : standard error of fc
 % random_chance : expected number of correct matches under chance
 load('wiki_adj.mat')
+
+'Loaded wiki adjacency matrix'
 try
 [status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
 seed=str2double(seed);
@@ -28,7 +31,6 @@ savedState = defaultStream.State;
 save('random_rng_state.mat','savedState')
 
 
-'Loaded wiki adjacency matrix'
 
 
 N_dims=size(G_EN_Adj);
@@ -104,4 +106,3 @@ legend('seeded','no seeds','chance')
 end
 end
 
->>>>>>> Stashed changes

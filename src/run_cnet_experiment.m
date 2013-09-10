@@ -2,7 +2,8 @@
 function [fc,sd_fc,n_vals,num_iter]=run_cnet_experiment(N,n_vals,num_iter)
 
 %Function run_wiki_experiment
-%[fc,sd_fc,random_chance,n_vals,num_iter]=run_wiki_experiment(N,n_vals,num_iter)
+% Fishkind version of experiments
+%[fc,sd_fc,random_chance,n_vals,num_iter]=run_cnet_experiment(N,n_vals,num_iter)
 % input arguments 
 % N: Since the matrix of charitynet is 5699x5699 matrix which is too large for computational
 % reason  we extract the first N vertices of the cnet graph (NxN submatrix)
@@ -35,12 +36,23 @@ N_dims=size(Ajt1)
 N_all= N_dims(1)
 
 %N= 400
-GE=Ajt1;
-GF=Ajt2;
-rowsum_E=sum(GE,2);
-find(rowsum_E==0)
-rowsum_F=sum(GF,2);
-find(rowsum_F==0)
+GE=uint16(Ajt1);
+GF=uint16(Ajt2);
+diag(GE)=0;
+diag(GF)=0;
+row_E = (sum(GE,2)==0 ) ;
+col_E = (sum(GE,1)==0 ) ;
+row_F = (sum(GF,2)==0 ) ;
+col_F = (sum(GF,1)==0 ) ;
+
+unconnected_verts_G1=(row_E &col_E');
+
+unconnected_verts_G2= (row_F &col_F');
+unconnected_verts = unconnected_verts_G1 | unconnected_verts_G2;
+GE=GE(~unconnected_verts,~unconnected_verts);
+GF=GF(~unconnected_verts,~unconnected_verts);
+Ajt1=double(GE);
+Ajt2=double(GF);
 
 %n_vals=[0 1 5 10 20 50 100 200 300 350 400 450];
 
