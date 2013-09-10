@@ -41,6 +41,9 @@ N_all= N_dims(1);
 GE=G_EN_Adj;
 GF=G_FR_Adj;
 
+GE(1:(N_all+1):(N_all*N_all))=0;
+GF(1:(N_all+1):(N_all*N_all))=0;
+
 rowsum_E=sum(GE,2);
 find(rowsum_E==0);
 rowsum_F=sum(GF,2);

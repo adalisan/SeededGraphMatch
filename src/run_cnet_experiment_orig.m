@@ -42,8 +42,11 @@ save('random_rng_state.mat','savedState')
 
 GE=uint16(Ajt1);
 GF=uint16(Ajt2);
-diag(GE)=0;
-diag(GF)=0;
+N_dims=size(GE);
+N_all=N_dims(1);
+GE(1:(N_all+1):(N_all*N_all))=0;
+GF(1:(N_all+1):(N_all*N_all))=0;
+
 row_E = (sum(GE,2)==0 ) ;
 col_E = (sum(GE,1)==0 ) ;
 row_F = (sum(GF,2)==0 ) ;
