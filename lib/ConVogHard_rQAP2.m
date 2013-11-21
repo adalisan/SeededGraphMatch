@@ -1,4 +1,4 @@
-function [ corr,iter ,fvals] = ConVogHard_rQAP2( A,B,m )
+function [ corr,iter_final ,fvals] = ConVogHard_rQAP2( A,B,m )
 
 % [corr,iter] = ConVogHard_rQAP2( A,B,m ) is the syntax.
 %  A,B are (m+n)x(m+n) adjacency matrices, 
@@ -30,7 +30,7 @@ B21=B(m+1:m+n,1:m);
 B22=B(m+1:m+n,m+1:m+n);
 
 
-patience=25;
+patience=50;
 tol=1E-3;
 epsilon=0.01;
 P=ones(n,n)/n;
@@ -38,7 +38,7 @@ toggle=1;
 iter=0;
 fvals = zeros(patience+1,4);
 alpha_vals =zeros(1,patience+1);
-while (toggle==1)&&(iter<patience)
+while ((toggle==1)&&(iter<patience))
     iter=iter+1;
     Grad=-2*A21*B21'-2*A12'*B12+2*P*(B21*B21')+2*(A12'*A12)*P+2*((A22'*A22*P)+ ...
         P*(B22*B22') - A22'*P*B22-A22*P*B22');
@@ -105,6 +105,7 @@ while (toggle==1)&&(iter<patience)
         toggle=0;    
     end
 end
+iter_final = iter;
 alpha_vals;
 corr=lapjv(-P,0.01);
 corr=[ 1:m,  m+corr];

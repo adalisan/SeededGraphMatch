@@ -89,7 +89,7 @@ for i=1:numiter
             test_ind = (n_val_for_i+1):N;
             test_v =ordering(test_ind);
             tic;
-            [matching, iter]=ConVogHard_rQAP2_order(A,B,n_val_for_i,ordering);
+            [matching, iter_rqap2]=ConVogHard_rQAP2_order(A,B,n_val_for_i,ordering);
             
             %P_jv_cell{n_i,i}=P_jv(:,ordering);
             
@@ -99,7 +99,7 @@ for i=1:numiter
             corr_match_rqap2(n_i,i,q_i) =  sum(matched_v==test_v);
             %obj_func_final_vals_JV(n_i,i,q_i)=fval_JV;
             %obj_func_final_vals_proj_JV(n_i,i,q_i)=fval_proj_JV;
-	     [matching_rqap, iter]=ConVogHard_rQAP_order(A,B,n_val_for_i,ordering,1);
+	     [matching_rqap, iter_rqap1]=ConVogHard_rQAP_order(A,B,n_val_for_i,ordering,1);
             
             %P_jv_cell{n_i,i}=P_jv(:,ordering);
             

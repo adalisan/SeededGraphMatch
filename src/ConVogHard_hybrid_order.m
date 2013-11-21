@@ -1,4 +1,4 @@
-function [ corr,iter ,fvals] = ConVogHard_hybrid_order( A,B,m ,ordering)
+function [ corr,iter_final ,fvals] = ConVogHard_hybrid_order( A,B,m ,ordering)
 
 % [corr,iter] = ConVogHard_hybrid( A,B,m ,ordering ) is the syntax.
 %  A,B are (m+n)x(m+n) adjacency matrices, 
@@ -34,8 +34,8 @@ B21=B(ordering(m+1:m+n),ordering(1:m));
 B22=B(ordering(m+1:m+n),ordering(m+1:m+n));
 
 
-patience_1=25;
-patience_2=25;
+patience_1=50;
+patience_2=50;
 patience=patience_2;
 tol_init = 1E-3;
 tol=1E-3;
@@ -46,6 +46,8 @@ iter=0;
 fvals = zeros(patience+1,4);
 alpha_vals =zeros(1,patience+1);
 r=1;
+converge_rqap_1=0;
+converge_rqap_2=0;
 while (toggle==1)&&(iter<patience_1)
     
     iter=iter+1;
@@ -117,6 +119,7 @@ while (toggle==1)&&(iter<patience_1)
         toggle=0;    
     end
 end
+iter_final= iter;
 alpha_vals;
 corr=lapjv(-P,0.01);
 corr=[ ordering(1:m), ordering( m+corr)];

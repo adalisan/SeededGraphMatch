@@ -1,4 +1,4 @@
-function [ corr,iter ,max_fvals,fval,fval_after_proj,P_whole,P_proj] = ConVogHard_rQAP_order( A,B,m,ordering,useJV )
+function [ corr,iter_final ,max_fvals,fval,fval_after_proj,P_whole,P_proj] = ConVogHard_rQAP_order( A,B,m,ordering,useJV )
 
 % [ corr,iter ,max_fvals,fval,fval_after_proj,P_whole,P_proj] = ConVogHard_rQAP_order( A,B,m,ordering,useJV ) 
 % is the syntax.
@@ -35,8 +35,12 @@ B12=B(ordering(1:m),ordering(m+1:m+n));
 B21=B(ordering(m+1:m+n),ordering(1:m));
 B22=B(ordering(m+1:m+n),ordering(m+1:m+n));
 
+%Maximum number of iterations
+patience=50;
 
-patience=25;
+
+% change ratio in function value for stopping criterion
+%If change ratio is lower, the iterations terminate
 tol=1E-3;
 epsilon=0.01;
 P=ones(n,n)/n;
@@ -114,6 +118,8 @@ fval=sum(sum(abs(norm_mat)));
  P_proj=P_proj(corr,:);
 norm_mat_proj = A*P_proj-P_proj*B;
 fval_after_proj= sum(sum(abs(norm_mat_proj)));
+
+iter_final= iter;
 
 end
 

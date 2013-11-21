@@ -30,8 +30,8 @@ B21=B(m+1:m+n,1:m);
 B22=B(m+1:m+n,m+1:m+n);
 
 
-patience_1=20;
-patience_2=20;
+patience_1=50;
+patience_2=50;
 patience=patience_2;
 tol_init = 1E-3;
 tol=1E-3;
@@ -42,6 +42,8 @@ iter=0;
 fvals = zeros(patience+1,4);
 alpha_vals =zeros(1,patience+1);
 r=1;
+converge_rqap_1=0;
+converge_rqap_2=0;
 while (toggle==1)&&(iter<patience_1)
     
     iter=iter+1;
@@ -113,6 +115,7 @@ while (toggle==1)&&(iter<patience_1)
         toggle=0;    
     end
 end
+iter_final= iter;
 alpha_vals;
 corr=lapjv(-P,0.01);
 corr=[ 1:m,  m+corr];

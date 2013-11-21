@@ -1,4 +1,4 @@
-function [ corr,iter ,fvals] = ConVogHard_rQAP2_order( A,B,m ,ordering)
+function [ corr,iter_final ,fvals] = ConVogHard_rQAP2_order( A,B,m ,ordering)
 
 %[ corr,iter ,fvals] = ConVogHard_rQAP2_order( A,B,m,ordering ) is the syntax.
 %  A,B are (m+n)x(m+n) adjacency matrices, 
@@ -36,7 +36,7 @@ B21=B(ordering(m+1:m+n),ordering(1:m));
 B22=B(ordering(m+1:m+n),ordering(m+1:m+n));
 
 
-patience=25;
+patience=50;
 tol=1E-3;
 epsilon=0.01;
 P=ones(n,n)/n;
@@ -112,6 +112,7 @@ while ((toggle==1)&&(iter<patience))
         toggle=0;    
     end
 end
+iter_final = iter;
 alpha_vals;
 corr=lapjv(-P,0.01);
 corr=[ ordering(1:m), ordering( m+corr)];
