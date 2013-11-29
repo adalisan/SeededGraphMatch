@@ -65,6 +65,11 @@ obj_func_final_vals_proj_ell2=zeros(n_len,numiter,q_len);
 obj_func_final_vals_proj_ell1=zeros(n_len,numiter,q_len);
 rng_state=cell(numiter,1);
 
+
+iter_count_rqap1=zeros(n_len,numiter,q_len);
+iter_count_rqap2=zeros(n_len,numiter,q_len);
+
+
 for i=1:numiter
     rng shuffle
     rng_st=rng;
@@ -90,7 +95,7 @@ for i=1:numiter
             test_v =ordering(test_ind);
             tic;
             [matching, iter_rqap2]=ConVogHard_rQAP2_order(A,B,n_val_for_i,ordering);
-            
+            iter_count_rqap1(n_i,i,q_i)  =  iter_rqap2;
             %P_jv_cell{n_i,i}=P_jv(:,ordering);
             
             %P_jv_pr_cell{n_i,i}=P_proj_jv(:,ordering);
@@ -100,7 +105,7 @@ for i=1:numiter
             %obj_func_final_vals_JV(n_i,i,q_i)=fval_JV;
             %obj_func_final_vals_proj_JV(n_i,i,q_i)=fval_proj_JV;
 	     [matching_rqap, iter_rqap1]=ConVogHard_rQAP_order(A,B,n_val_for_i,ordering,1);
-            
+            iter_count_rqap1(n_i,i,q_i)  =  iter_rqap1;
             %P_jv_cell{n_i,i}=P_jv(:,ordering);
             
             %P_jv_pr_cell{n_i,i}=P_proj_jv(:,ordering);
