@@ -95,7 +95,7 @@ for i=1:numiter
             test_v =ordering(test_ind);
             tic;
             [matching, iter_rqap2]=ConVogHard_rQAP2_order(A,B,n_val_for_i,ordering);
-            iter_count_rqap1(n_i,i,q_i)  =  iter_rqap2;
+            iter_count_rqap2(n_i,i,q_i)  =  iter_rqap2;
             %P_jv_cell{n_i,i}=P_jv(:,ordering);
             
             %P_jv_pr_cell{n_i,i}=P_proj_jv(:,ordering);
