@@ -181,5 +181,5 @@ for i= 1:q_len
         'Color',figcolors(i*incr,:),'LineWidth',2,'LineStyle',':')
 end
 
-xlim([-1 max(n_vals_s)+2])
+xlim([-1 max(n_val)+2])
 
