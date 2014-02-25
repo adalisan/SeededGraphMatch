@@ -7,7 +7,7 @@ function [alignment]=GM_exact(A,B,m)
 % then vertex1ofA->vertex1ofB ... vertex4ofA->vertex25ofB... 
 % DEF Feb 18, 2014, ready
 
-addpath('..\..\..\..\gurobi562\win64\matlab');
+addpath('F:\gurobi562\win64\matlab');
 
 [mplusn,~]=size(A);
 n=mplusn-m;
@@ -44,7 +44,7 @@ sense_ineq = repmat('<',0, 1);
 sense = [sense_eq; sense_ineq];
 %Binary and Real Variables
 vtype1 = repmat('B',n^2, 1);
-vtype2 = repmat('C',2*n^2+4*m*n,1);
+vtype2 = repmat('B',2*n^2+4*m*n,1);
 vtype = [vtype1; vtype2];
 
 model.A = M;

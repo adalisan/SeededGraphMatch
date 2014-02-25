@@ -28,7 +28,7 @@ fc_rqap_agg=cat(2,fc_rqap_agg,fc_rqap);
 fc_slp_agg=cat(2,fc_slp_agg,fc_slp);
 end
 
-[~,numiter,~]= size(fc_agg)
+[~,numiter,~]= size(fc_rqap_agg)
 
 
 figure
@@ -81,8 +81,8 @@ legend('hybrid-FAQ','FAQ' )
 figure
 for i= 1:q_len
     q_i=q(i);
-avg_line=mean(fc_agg(:,:,i),2);
-sd_line = std(fc_agg(:,:,i),1,2);
+avg_line=mean(fc_rqap_agg(:,:,i),2);
+sd_line = std(fc_rqap_agg(:,:,i),1,2);
     plot (n_vals,avg_line,'Color',figcolors(i*incr,:),'LineWidth',2)
     hold on
     
@@ -124,8 +124,8 @@ legend(qvals)
 
 
 n_vals_s = n_vals(n_vals<30 )
-fc_s=fc(1:length(n_vals_s),:,:);
-
+fc_s=fc_hybrid_agg(1:length(n_vals_s),:,:);
+fc_rqap_s = fc_rqap_agg(1:length(n_vals_s),:,:);
 
 figure
 
@@ -139,6 +139,16 @@ sd_line = std(fc_s(:,:,i),1,2);
    % plot (n_vals,avg_line,'Color',figcolors(i*incr,:),'LineWidth',2)
     errorbar (n_vals_s,avg_line,2*sd_line/sqrt(numiter),'Color',figcolors(i*incr,:),'LineWidth',2)
     hold on
+    
+    
+       
+    avg_line_2=mean(fc_rqap_s(:,:,i),2);
+sd_line_2 = std(fc_rqap_s(:,:,i),1,2);
+errorbar (n_vals_s,avg_line_2,2*sd_line_2/sqrt(numiter), ...
+    'Color',figcolors(i*incr,:),'LineWidth',2,'LineStyle',':')
+    
+    
+    
 end
 
 
@@ -152,7 +162,7 @@ plot(n_vals_s,1./(N-n_vals_s),main_colors{length(main_colors)},'LineWidth',2)
 
 %errorbar (n_vals,avg_line,2*sd_line/sqrt(numiter),'Color',figcolors(q_int*incr,:), ...
 %    'LineStyle','-.','LineWidth',1.5)
-qvals= num2str(q');
+qvals= [repmat( ['hybrid p_{pert}= '; 'rqap_1 p_{pert}= '], length(q),1) num2str(q_r')];
 
 
 legend(qvals)   
