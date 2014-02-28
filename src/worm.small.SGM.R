@@ -39,7 +39,7 @@ for (it in mat.it)  {
     
       correct.match[[it]][m.it,mc.it] <- num.correct.match <- sum(match.hat[,2]==((m+1):n))/(n-m)
       
-      matching.exact.it.list <- sgmviaIP(A,B, m=m)
+      matching.exact.it.list <- sgmViaIP(A,B, m=m)
       match.exact.hat <  matching.exact.it.list[[1]] 
       
       correct.match.exact[[it]][m.it,mc.it] <- num.correct.match.exact <- sum(match.exact.hat[(m+1):n]==((m+1):n))/(n-m)
