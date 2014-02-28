@@ -19,8 +19,11 @@ sgmViaIP <- function (A, B,m){
   dim(vecA21)<- c(m*n,1);
   eye.n<-diag(n)
   eye.nsq.2mn = diag(n^2+2*m*n)
-  vec.1 <- matrix(1,1,n) 
-  M11=rBind( (eye.n%x% A22)- (t(B22) %x% eye.n), 
+  vec.1 <- matrix(1,1,n)
+  
+  M11 <- (eye.n%x% A22)
+  M11 <-  M11 - (t(B22) %x% eye.n)
+  M11=rBind( M11, 
       eye.n %x% A12, t(B21) %x% eye.n);
   M21= rBind( eye.n %x% vec.1 , vec.1 %x% eye.n);
   M=rBind(cBind( M11, eye.nsq.2mn , -eye.nsq.2mn),
@@ -47,7 +50,8 @@ sgmViaIP <- function (A, B,m){
   model$rhs = b;
   model$sense = sense;
   model$vtype = vtype;
-  result = gurobi[model];
+ require(gurobi)
+  result = gurobi(model);
   print(result$status)
   x = result$x;
   x = round(x);
