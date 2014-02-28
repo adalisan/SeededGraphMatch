@@ -12,7 +12,7 @@ if a==1
     fc_rqap_agg=fc_rqap;
     fc_hybrid_agg=fc;
     fc_slp_agg=fc_slp;
-end
+else
     try
         load(char(matfiles(a)),'fc','fc_rqap','fc_slp')
         
@@ -28,7 +28,9 @@ fc_rqap_agg=cat(2,fc_rqap_agg,fc_rqap);
 fc_slp_agg=cat(2,fc_slp_agg,fc_slp);
 end
 
-[~,numiter,~]= size(fc_rqap_agg)
+end
+
+[~,numiter,~] = size(fc_rqap_agg)
 
 
 figure
