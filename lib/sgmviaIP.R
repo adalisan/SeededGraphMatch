@@ -1,7 +1,7 @@
 sgmViaIP <- function (A, B,m){
   require(Matrix)
   
-   n = nrow(A);
+  n = nrow(A);
   test.v.count= n-m;
   A11=A[1:m,1:m];
   A12=A[1:m,m+(1:test.v.count)];
@@ -54,7 +54,11 @@ sgmViaIP <- function (A, B,m){
   
   P=x;
   dim(P)<- c(test.v.count,test.v.count)
+  P.full <- diag(n)
+  P.full[(m+1):n,(m+1):n] <- P
   temp=P%*%matrix(1:test.v.count, test.v.count, 1);
    alignment=c( 1:m , t(temp+m) );
-   return (list(matching=alignment, perm.mat = P))
+  
+   return (list(matching=alignment,matching.seeded=t(temp+m), 
+                perm.mat=P.full,  perm.mat.unseeded = P))
 }

@@ -2,12 +2,14 @@ library(igraph)
 library(R.matlab)
 library(clue)
 
+source("./lib/sgmviaIP.R")
 celeg.mats<- readMat("./data/CElegans_3subgraph_pairs.mat")
 mat.it<-1:3
 nmc <- 400
 mat.size<- c(0,0,0)
 m.vals.list<-list()
 correct.match <- list()
+correct.match.exact <- list()
   random.match <- list()
 for (it in mat.it)  {
   n <- nrow(celeg.mats[[it]])
@@ -17,6 +19,7 @@ for (it in mat.it)  {
   m.vals.list[[it]] <- m.vals
   
   correct.match <- c(correct.match,list(array(0,dim=c(m.len,nmc))))
+  correct.match.exact <- c(correct.match.exact,list(array(0,dim=c(m.len,nmc))))
   random.match <- c(random.match,list(array(0,dim=c(m.len,nmc))))
   
   rownames(correct.match[[it]]) <- m.vals
@@ -30,11 +33,19 @@ for (it in mat.it)  {
       B <- celeg.mats[[it+3]][seed.perm,seed.perm]
       
       matching.it.list <- sgm(A,B, m=m, iteration=20, start=init.mat)
+   
       P.hat   <-  matching.it.list[[2]]
       match.hat <- matching.it.list[[1]]
-      correct.match[[it]][m.it,mc.it] <- sum(match.hat[,2]==((m+1):n))/(n-m)
+    
+      correct.match[[it]][m.it,mc.it] <- num.correct.match <- sum(match.hat[,2]==((m+1):n))/(n-m)
+      
+      matching.exact.it.list <- sgmviaIP(A,B, m=m)
+      match.exact.hat <  matching.exact.it.list[[1]] 
+      
+      correct.match.exact[[it]][m.it,mc.it] <- num.correct.match.exact <- sum(match.exact.hat[(m+1):n]==((m+1):n))/(n-m)
      # rownames(correct.match[[it]])=m.it
-      print(paste0("correct.match = ",sum(match.hat[,2]==((m+1):n))/(n-m)))
+      print(paste0("correct.match = ",num.correct.match))
+      print(paste0("correct.match.exact = ",num.correct.match))
       random.match[[it]][m.it,mc.it] <- 1/(n-m)
     }
   }
