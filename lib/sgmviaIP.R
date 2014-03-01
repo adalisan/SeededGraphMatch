@@ -3,6 +3,10 @@ sgmViaIP <- function (A, B,m){
   
   totv = nrow(A);
   n= totv-m;
+  if (m<=0){
+    stop("Number of seeds (m) should be larger than 0")
+  
+  }
   A11=A[1:m,1:m,drop=FALSE];
   A12=A[1:m,m+(1:n),drop=FALSE];
   A21=A[m+(1:n),1:m,drop=FALSE];
