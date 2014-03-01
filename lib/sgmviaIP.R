@@ -3,14 +3,14 @@ sgmViaIP <- function (A, B,m){
   
   totv = nrow(A);
   n= totv-m;
-  A11=A[1:m,1:m];
-  A12=A[1:m,m+(1:n)];
-  A21=A[m+(1:n),1:m];
-  A22=A[m+(1:n),m+(1:n)];
-  B11=B[1:m,1:m];
-  B12=B[1:m,m+(1:n)];
-  B21=B[m+(1:n),1:m];
-  B22=B[m+(1:n),m+(1:n)];
+  A11=A[1:m,1:m,drop=FALSE];
+  A12=A[1:m,m+(1:n),drop=FALSE];
+  A21=A[m+(1:n),1:m,drop=FALSE];
+  A22=A[m+(1:n),m+(1:n),drop=FALSE];
+  B11=B[1:m,1:m,drop=FALSE];
+  B12=B[1:m,m+(1:n),drop=FALSE];
+  B21=B[m+(1:n),1:m,drop=FALSE];
+  B22=B[m+(1:n),m+(1:n),drop=FALSE];
   
   vecB12=B12
   dim(vecB12)<- c(m*n,1);
