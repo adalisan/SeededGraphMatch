@@ -38,12 +38,13 @@ for (it in mat.it)  {
       match.hat <- matching.it.list[[1]]
     
       correct.match[[it]][m.it,mc.it] <- num.correct.match <- sum(match.hat[,2]==((m+1):n))/(n-m)
-      
+      num.correct.match.exact <- NULL
+      if (m>0){
       matching.exact.it.list <- sgmViaIP(A,B, m=m)
       match.exact.hat <  matching.exact.it.list[[1]] 
       
       correct.match.exact[[it]][m.it,mc.it] <- num.correct.match.exact <- sum(match.exact.hat[(m+1):n]==((m+1):n))/(n-m)
-     # rownames(correct.match[[it]])=m.it
+      } # rownames(correct.match[[it]])=m.it
       print(paste0("correct.match = ",num.correct.match))
       print(paste0("correct.match.exact = ",num.correct.match))
       random.match[[it]][m.it,mc.it] <- 1/(n-m)
