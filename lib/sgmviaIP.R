@@ -44,7 +44,7 @@ sgmViaIP <- function (A, B,m){
    sense = sense_eq
   #Binary and Real Variables
   vtype1 = rep('B',n^2);
-  vtype2 = rep('B',2*n^2+4*m*n);
+  vtype2 = rep('C',2*n^2+4*m*n);
   vtype = c(vtype1, vtype2);
   
   model = list()
