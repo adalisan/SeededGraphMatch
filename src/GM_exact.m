@@ -44,7 +44,7 @@ sense_ineq = repmat('<',0, 1);
 sense = [sense_eq; sense_ineq];
 %Binary and Real Variables
 vtype1 = repmat('B',n^2, 1);
-vtype2 = repmat('B',2*n^2+4*m*n,1);
+vtype2 = repmat('C',2*n^2+4*m*n,1);
 vtype = [vtype1; vtype2];
 
 model.A = M;
@@ -53,6 +53,8 @@ model.modelsense = 'min';
 model.rhs = b;
 model.sense = sense;
 model.vtype = vtype;
+gurobi_write(model,'SGM_IP_prob.ip')
+
 result = gurobi(model);
 result.status
 x = result.x;

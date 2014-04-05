@@ -9,7 +9,7 @@ function [alignment,fwDISAGREE,exactDISAGREE,fwruntime,exactruntime]=GM_exact_wi
 % This version runs Frank-Wolfe first, then uses to seed the exact IP solver
 % alpha version Feb 20, 2014
 
-addpath('..\..\..\..\gurobi562\win64\matlab');
+addpath('F:\gurobi562\win64\matlab');
 
 [mplusn,~]=size(A);
 n=mplusn-m;
