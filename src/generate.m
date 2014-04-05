@@ -15,7 +15,7 @@ for i=1:nplusm
     for j=i+1:nplusm
         A(i,j)=    (rand<Bern(i,j));
         A(j,i)=A(i,j);
-        B(i,j)=    (rand< (  (1-crln)*Bern(i,j)+crln*A(i,j) )  );
+        B(i,j)=    (rand< (  (1.0-crln)*Bern(i,j)+crln*A(i,j) )  );
         B(j,i)=B(i,j);
     end
 end
