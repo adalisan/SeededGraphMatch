@@ -7,7 +7,7 @@ function [alignment]=GM_exact(A,B,m)
 % then vertex1ofA->vertex1ofB ... vertex4ofA->vertex25ofB... 
 % DEF Feb 18, 2014, ready
 
-addpath('F:\gurobi562\win64\matlab');
+addpath('~/projects/gurobi/gurobi562/linux64/matlab');
 
 [mplusn,~]=size(A);
 n=mplusn-m;
