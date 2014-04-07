@@ -15,6 +15,8 @@ for i=1:nplusm
     for j=i+1:nplusm
         A(i,j)=    (rand<Bern(i,j));
         A(j,i)=A(i,j);
+        A_temp = double(A);
+        Bern_tmp = double(Bern)
         B(i,j)=    (rand< (  (1.0-crln)*Bern(i,j)+crln*A(i,j) )  );
         B(j,i)=B(i,j);
     end
@@ -24,7 +26,7 @@ end
 mix=[ [1:m] m+randperm(n) ];
 A=A(mix,mix);
 B=B(mix,mix);
-truth=[ [1:m] m+randperm(n) ];
+truth=mix;
 A=A(truth,truth);
 
 

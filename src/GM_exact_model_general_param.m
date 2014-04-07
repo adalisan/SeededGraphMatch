@@ -18,7 +18,6 @@ end
 mplusn = m+n;
 
 
-
 [G_1,G_2,true_perm] = generate(p*ones(mplusn),corr,m);
 
 if ~exist('tag') 
