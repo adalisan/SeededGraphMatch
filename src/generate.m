@@ -10,15 +10,16 @@ function [A,B,truth]=generate(Bern,crln,m)
 n=nplusm-m;
 
 A=zeros(nplusm,nplusm);
+
 B=zeros(nplusm,nplusm);
 for i=1:nplusm
     for j=i+1:nplusm
-        Bern_tmp = double(Bern)
-        A(i,j)=    (rand<Bern_tmp(i,j));
+        Bern_tmp = double(Bern(i,j));
+        A(i,j)=    (rand<Bern_tmp);
         A(j,i)=A(i,j);
-        A_temp = double(A);
+        A_tmp= double(A(i,j));
         
-        B(i,j)=    (rand< (  (1.0-crln)*Bern_tmp(i,j)+crln*A_tmp(i,j) )  );
+        B(i,j)=    (rand< (  (1.0-crln)*Bern_tmp+crln*A_tmp )  );
         B(j,i)=B(i,j);
     end
 end
