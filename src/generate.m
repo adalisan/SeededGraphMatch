@@ -13,11 +13,12 @@ A=zeros(nplusm,nplusm);
 B=zeros(nplusm,nplusm);
 for i=1:nplusm
     for j=i+1:nplusm
-        A(i,j)=    (rand<Bern(i,j));
+        Bern_tmp = double(Bern)
+        A(i,j)=    (rand<Bern_tmp(i,j));
         A(j,i)=A(i,j);
         A_temp = double(A);
-        Bern_tmp = double(Bern)
-        B(i,j)=    (rand< (  (1.0-crln)*Bern(i,j)+crln*A(i,j) )  );
+        
+        B(i,j)=    (rand< (  (1.0-crln)*Bern_tmp(i,j)+crln*A_tmp(i,j) )  );
         B(j,i)=B(i,j);
     end
 end
