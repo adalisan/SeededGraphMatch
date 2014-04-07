@@ -23,7 +23,8 @@ n=nplusm-m;
 %         B(j,i)=B(i,j);
 %     end
 % end
-
+N= nplusm;
+rho_val = (1.0-crln)/2;
  Bernoulli=rand(N);
         A=rand(N)<Bernoulli;
         A=A-triu(A);A=A+A';
