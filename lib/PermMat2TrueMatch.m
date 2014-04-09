@@ -1,9 +1,11 @@
-function [truematch,truematch_ratio]= PermMat2TrueMatch(P,true_alignment,m)
-    [n,~] =  size(P);
-    mplusn = m+n; 
-    temp=P*[1:mplusn]';
-    alignment=[ [1:m] temp'+m ];
-    mplusn = len(alignment);
-    truematch = sum(true_alignment[(m+1):mplusn] == alignment[(m+1):mplusn]);
-    truematch_ration = truematch/(n)
+function [truematch, truematch_ratio] = PermMat2TrueMatch(P, truealignment, m)
+
+[n,~] =  size(P);
+mplusn = m+n; 
+n_vec = (1:n)';
+temp=P*n_vec;
+alignsoln=[ 1:m temp'+m ];
+truematch = sum(truealignment(((m+1):mplusn)) == ...
+        alignsoln((m+1):mplusn));
+truematch_ratio = truematch/(n);
     
