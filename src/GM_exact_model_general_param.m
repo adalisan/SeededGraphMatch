@@ -18,6 +18,23 @@ end
 mplusn = m+n;
 
 
+try
+[status seed] = system('od /dev/urandom --read-bytes=4 -tu | awk ''{print $2}''');
+seed=str2double(seed);
+rng(seed);
+catch
+    rng shuffle
+    'If running in parallel, parallel simulation might have the same random seed'
+    'Check the seeds for uniqueness'    
+end
+currseed= rng();
+save('random_rng.mat','currseed')
+
+defaultStream = RandStream.getGlobalStream ;
+savedState = defaultStream.State;
+save('random_rng_state.mat','savedState')
+
+
 [G_1,G_2,true_perm] = generate(p*ones(mplusn),corr,m);
 
 if ~exist('tag') 
